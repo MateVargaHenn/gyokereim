@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gyökereim.hu – Az oldal fejlesztés alatt áll</title>
+
+  <style>
+    :root {
+      --bg: #efe1cc;
+      --bg-light: #f8eddc;
+      --sand: #d8c1a1;
+      --sand-dark: #b79b76;
+      --text: #2b2521;
+      --muted: #6f6256;
+      --line: #4b4038;
+      --button: #2f2924;
+      --button-text: #f5ead9;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+    }
+
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.45), transparent 45%),
+        linear-gradient(180deg, var(--bg-light), var(--bg));
+      overflow-x: hidden;
+    }
+
+    .page {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+      isolation: isolate;
+    }
+
+    .page::before,
+    .page::after {
+      content: "";
+      position: absolute;
+      top: 22%;
+      width: 42vw;
+      height: 42vw;
+      max-width: 620px;
+      max-height: 620px;
+      opacity: 0.16;
+      background-repeat: no-repeat;
+      background-size: contain;
+      z-index: -1;
+      filter: sepia(0.4);
+    }
+
+    .page::before {
+      left: -10vw;
+      background-image:
+        radial-gradient(ellipse at 30% 50%, transparent 40%, rgba(80,65,50,0.18) 41%, transparent 42%),
+        repeating-linear-gradient(25deg, transparent 0 18px, rgba(70,60,48,0.42) 19px 20px);
+      transform: rotate(15deg);
+      mask-image: radial-gradient(circle, black 0 50%, transparent 72%);
+    }
+
+    .page::after {
+      right: -10vw;
+      background-image:
+        radial-gradient(ellipse at 70% 50%, transparent 40%, rgba(80,65,50,0.18) 41%, transparent 42%),
+        repeating-linear-gradient(-25deg, transparent 0 18px, rgba(70,60,48,0.42) 19px 20px);
+      transform: rotate(-15deg);
+      mask-image: radial-gradient(circle, black 0 50%, transparent 72%);
+    }
+
+    .content {
+      width: min(980px, 100%);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 34px;
+      border: 2px solid var(--line);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(216, 193, 161, 0.45);
+      box-shadow: 0 18px 50px rgba(68, 51, 36, 0.12);
+      position: relative;
+    }
+
+    .logo-inner {
+      width: 112px;
+      text-align: center;
+    }
+
+    .tree {
+      width: 62px;
+      height: 48px;
+      margin: 0 auto 2px;
+      position: relative;
+    }
+
+    .tree::before {
+      content: "♧";
+      font-size: 46px;
+      color: rgba(47, 41, 36, 0.72);
+      line-height: 1;
+    }
+
+    .brand {
+      font-size: 25px;
+      font-style: italic;
+      line-height: 1;
+      border-top: 2px solid var(--line);
+      border-bottom: 2px solid var(--line);
+      padding: 5px 0 6px;
+      letter-spacing: -0.5px;
+    }
+
+    .roots {
+      font-size: 34px;
+      line-height: 0.8;
+      color: rgba(47, 41, 36, 0.55);
+      transform: rotate(180deg);
+      margin-top: 8px;
+    }
+
+    .eyebrow {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+
+    .divider {
+      width: 130px;
+      height: 1px;
+      background: rgba(75, 64, 56, 0.35);
+      margin: 0 auto 38px;
+      position: relative;
+    }
+
+    .divider::after {
+      content: "";
+      width: 9px;
+      height: 9px;
+      background: var(--sand-dark);
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    h1 {
+      font-size: clamp(46px, 7vw, 96px);
+      font-weight: 400;
+      letter-spacing: -0.045em;
+      line-height: 1.05;
+      margin-bottom: 24px;
+      text-shadow: 0 2px 0 rgba(255,255,255,0.28);
+    }
+
+    .subtitle {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: clamp(17px, 2vw, 24px);
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 38px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      min-height: 56px;
+      padding: 0 34px;
+      border-radius: 999px;
+      background: var(--button);
+      color: var(--button-text);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      box-shadow: 0 18px 45px rgba(47, 41, 36, 0.22);
+    }
+
+    .pill .leaf {
+      font-size: 19px;
+      color: #d9c19d;
+    }
+
+    .footer {
+      margin-top: 88px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+    }
+
+    .footer a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .footer span {
+      opacity: 0.55;
+    }
+
+    .waves {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 34vh;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .wave {
+      position: absolute;
+      left: -5%;
+      width: 110%;
+      height: 80%;
+      border-radius: 50% 50% 0 0;
+      background: rgba(183, 155, 118, 0.18);
+    }
+
+    .wave.one {
+      bottom: -45%;
+      transform: rotate(2deg);
+    }
+
+    .wave.two {
+      bottom: -62%;
+      background: rgba(183, 155, 118, 0.25);
+      transform: rotate(-4deg);
+    }
+
+    .wave.three {
+      bottom: -78%;
+      background: rgba(183, 155, 118, 0.32);
+      transform: rotate(3deg);
+    }
+
+    .sprout {
+      margin: 64px auto -54px;
+      width: 40px;
+      height: 54px;
+      position: relative;
+      opacity: 0.62;
+    }
+
+    .sprout::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 2px;
+      height: 54px;
+      background: var(--sand-dark);
+    }
+
+    .sprout::after {
+      content: "❧";
+      position: absolute;
+      left: 50%;
+      top: -10px;
+      transform: translateX(-50%);
+      font-size: 42px;
+      color: var(--sand-dark);
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding: 32px 18px;
+      }
+
+      .logo {
+        width: 124px;
+        height: 124px;
+        margin-bottom: 28px;
+      }
+
+      .brand {
+        font-size: 20px;
+      }
+
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.22em;
+      }
+
+      h1 {
+        font-size: 43px;
+      }
+
+      .subtitle {
+        font-size: 16px;
+      }
+
+      .pill {
+        width: 100%;
+        justify-content: center;
+        padding: 0 18px;
+        letter-spacing: 0.14em;
+      }
+
+      .footer {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 70px;
+      }
+
+      .footer span {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="content">
+      <div class="icon" aria-label="Gyökereim.hu logó">
+        <img src="icon/icon.png" width="248" height="248" alt="Gyökereim.hu logó" srcset="">
+      </div>
+
+      <p class="eyebrow">Kapcsolatban a gyökereinkkel</p>
+      <div class="divider"></div>
+
+      <h1>Az oldal fejlesztés alatt áll</h1>
+
+      <p class="subtitle">
+        Hamarosan érkezünk értékes tartalmakkal és újdonságokkal.
+      </p>
+
+      <div class="pill">
+        <span class="leaf">❧</span>
+        <span>Köszönjük a türelmed!</span>
+      </div>
+
+      <div class="sprout"></div>
+
+      <footer class="footer">
+        <a href="mailto:info@gyokereim.hu">✉ info@gyokereim.hu</a>
+        <span>|</span>
+        <p>Hamarosan többet is megosztunk.</p>
+      </footer>
+    </section>
+
+    <div class="waves" aria-hidden="true">
+      <div class="wave one"></div>
+      <div class="wave two"></div>
+      <div class="wave three"></div>
+    </div>
+  </main>
+</body>
+</html>

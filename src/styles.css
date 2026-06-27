@@ -1,3 +1,48 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+:root {
+  /* háttér */
+      --bg: #efe1cc;
+      --bg-light: #f8eddc;
+      --sand: #d8c1a1;
+      --sand-dark: #b79b76;
+      --text: #2b2521;
+      --muted: #6f6256;
+      --line: #4b4038;
+      --button: #2f2924;
+      --button-text: #f5ead9;
+  /* gyökér / fő grafika */
+  --color-root: #1f1712;
+  --color-root-soft: #3a271b;
+
+  /* szöveg */
+  --color-text: #2b2926;
+  --color-text-muted: #6f655c;
+
+  /* természetes kiemelés */
+  --color-accent: #6f4e37;
+  --color-accent-light: #b8946b;
+
+  /* buborék */
+  --color-bubble-bg: #fff8e8;
+  --color-bubble-border: #d6b98c;
+
+  /* CTA */
+  --color-cta-bg: #3a271b;
+  --color-cta-text: #fffaf0;
+}
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

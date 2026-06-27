@@ -3,6 +3,18 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
+    "ignoreDeprecations": "6.0",
+    "paths": {
+      "@core/*": ["src/app/core/*"],
+      "@components/*": ["src/app/shared/components/*"],
+      "@enums/*": ["src/app/shared/enums/*"],
+      "@models/*": ["src/app/shared/models/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@features/*": ["src/app/features/*"],
+      "@data-transfer-objects/*": ["src/app/shared/data-transfer-objects/*"],
+      "@services/*": ["src/app/core/services/*"]
+    },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
@@ -12,7 +24,7 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
-    "module": "preserve"
+    "module": "preserve",
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
