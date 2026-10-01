@@ -7,6 +7,7 @@
     "ignoreDeprecations": "6.0",
     "paths": {
       "@core/*": ["src/app/core/*"],
+      "@admincore/*": ["projects/admin/src/app/core/*"],
       "@components/*": ["src/app/shared/components/*"],
       "@enums/*": ["src/app/shared/enums/*"],
       "@models/*": ["src/app/shared/models/*"],
@@ -38,6 +39,12 @@
     },
     {
       "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/admin/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/admin/tsconfig.spec.json"
     }
   ]
 }

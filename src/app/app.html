@@ -1,5 +1,17 @@
-<app-header class="min-w-screen min-h-50"></app-header>
-<main class="container min-h-screen min-w-screen">
-  <router-outlet></router-outlet>
-</main>
-<app-footer></app-footer>
+<app-cookie-panel></app-cookie-panel>
+<app-chat></app-chat>
+@if(isComponent('kezdolap')) {
+<section class="hero-section">
+  <!-- hero szöveg, cím, CTA -->
+   <app-tree-root></app-tree-root>
+</section>
+}
+<div class="min-h-screen flex flex-col">
+  <app-header />
+
+  <main class="flex-1">
+    <router-outlet />
+  </main>
+
+  <app-footer />
+</div>

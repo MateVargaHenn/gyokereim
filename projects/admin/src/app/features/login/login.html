@@ -1,0 +1,182 @@
+<section
+  class="
+    min-h-screen
+    flex
+    items-center
+    justify-center
+    px-4
+    bg-stone-100
+  "
+>
+  <div
+    class="
+      w-full
+      max-w-md
+      bg-white
+      rounded-3xl
+      border
+      border-stone-200
+      shadow-sm
+      p-8
+    "
+  >
+    <div class="mb-8">
+      <p
+        class="
+          text-xs
+          uppercase
+          tracking-[0.2em]
+          text-stone-500
+          mb-2
+        "
+      >
+        Gyökereim
+      </p>
+
+      <h1
+        class="
+          text-3xl
+          font-semibold
+          text-stone-900
+        "
+      >
+        Bejelentkezés
+      </h1>
+
+      <p class="mt-2 text-sm text-stone-500">
+        Adminisztrációs felület
+      </p>
+    </div>
+
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col gap-5"
+    >
+      <div>
+        <label
+          for="userName"
+          class="
+            block
+            text-sm
+            font-medium
+            text-stone-700
+            mb-2
+          "
+        >
+          Felhasználónév
+        </label>
+
+        <input
+          id="userName"
+          type="text"
+          formControlName="userName"
+          autocomplete="username"
+          class="
+            w-full
+            rounded-xl
+            border
+            border-stone-300
+            px-4
+            py-3
+            outline-none
+            focus:border-stone-500
+          "
+        >
+
+        @if (
+          loginForm.controls.userName.touched &&
+          loginForm.controls.userName.invalid
+        ) {
+          <p class="mt-1 text-sm text-red-600">
+            A felhasználónév megadása kötelező.
+          </p>
+        }
+      </div>
+
+      <div>
+        <label
+          for="password"
+          class="
+            block
+            text-sm
+            font-medium
+            text-stone-700
+            mb-2
+          "
+        >
+          Jelszó
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          autocomplete="current-password"
+          class="
+            w-full
+            rounded-xl
+            border
+            border-stone-300
+            px-4
+            py-3
+            outline-none
+            focus:border-stone-500
+          "
+        >
+
+        @if (
+          loginForm.controls.password.touched &&
+          loginForm.controls.password.invalid
+        ) {
+          <p class="mt-1 text-sm text-red-600">
+            A jelszó megadása kötelező.
+          </p>
+        }
+      </div>
+
+      @if (error()) {
+        <div
+          class="
+            rounded-xl
+            border
+            border-red-200
+            bg-red-50
+            px-4
+            py-3
+            text-sm
+            text-red-700
+          "
+        >
+          {{ error() }}
+        </div>
+      }
+
+      <button
+        type="submit"
+        [disabled]="isLoading()"
+        class="
+          mt-2
+          w-full
+          rounded-xl
+          bg-stone-900
+          text-white
+          px-4
+          py-3
+          font-medium
+          cursor-pointer
+          disabled:opacity-50
+          disabled:cursor-not-allowed
+          hover:bg-stone-800
+        "
+      >
+        @if (isLoading()) {
+          Bejelentkezés...
+        }
+        @else {
+          Bejelentkezés
+        }
+      </button>
+    </form>
+  </div>
+</section>

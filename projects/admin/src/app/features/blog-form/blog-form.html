@@ -1,0 +1,424 @@
+<section class="p-6 max-w-5xl">
+
+  <header class="mb-8">
+    <h1 class="text-2xl font-bold text-gray-900">
+      Új blogbejegyzés
+    </h1>
+
+    <p class="mt-1 text-sm text-gray-500">
+      Új bejegyzés létrehozása.
+    </p>
+  </header>
+
+  @if (error()) {
+    <div
+      class="
+        mb-6
+        rounded-md
+        border border-red-200
+        bg-red-50
+        px-4 py-3
+        text-sm text-red-700
+      "
+    >
+      {{ error() }}
+    </div>
+  }
+
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    class="space-y-6"
+  >
+
+    <fieldset
+      [disabled]="isLoading() || isSaving()"
+      class="space-y-6"
+    >
+    <div>
+      <label
+        for="title"
+        class="block text-sm font-medium text-gray-700 mb-1"
+      >
+        Cím
+      </label>
+
+      <input
+        id="title"
+        type="text"
+        formControlName="title"
+        class="
+          w-full
+          rounded-md
+          border border-gray-300
+          px-3 py-2
+          outline-none
+          focus:border-gray-600
+          focus:ring-1 focus:ring-gray-600
+        "
+      >
+
+      @if (
+            form.controls.title.touched &&
+            form.controls.title.hasError('required')
+          ) {
+            <p class="mt-1 text-sm text-red-600">
+              A cím megadása kötelező.
+            </p>
+          }
+
+          @if (
+            form.controls.title.touched &&
+            form.controls.title.hasError('maxlength')
+          ) {
+            <p class="mt-1 text-sm text-red-600">
+              A cím legfeljebb 200 karakter lehet.
+            </p>
+          }
+    </div>
+
+    <div>
+      <label
+        for="metaTitle"
+        class="block text-sm font-medium text-gray-700 mb-1"
+      >
+        Meta title
+      </label>
+
+      <input
+        id="metaTitle"
+        type="text"
+        formControlName="metaTitle"
+        class="
+          w-full
+          rounded-md
+          border border-gray-300
+          px-3 py-2
+          outline-none
+          focus:border-gray-600
+          focus:ring-1 focus:ring-gray-600
+        "
+      >
+    </div>
+
+    <div>
+      <label
+        for="slug"
+        class="block text-sm font-medium text-gray-700 mb-1"
+      >
+        Útvonal
+      </label>
+
+      <input
+        id="slug"
+        type="text"
+        formControlName="slug"
+        placeholder="nemesi-osok-kutatasa-magyarorszagon"
+        class="
+          w-full
+          rounded-md
+          border border-gray-300
+          px-3 py-2
+          outline-none
+          focus:border-gray-600
+          focus:ring-1 focus:ring-gray-600
+        "
+      >
+      @if (
+            form.controls.slug.touched &&
+            form.controls.slug.hasError('required')
+          ) {
+            <p class="mt-1 text-sm text-red-600">
+              A slug megadása kötelező.
+            </p>
+          }
+
+          @if (
+            form.controls.slug.touched &&
+            form.controls.slug.hasError('pattern')
+          ) {
+            <p class="mt-1 text-sm text-red-600">
+              Csak kisbetű, szám és kötőjel használható.
+            </p>
+          }
+
+          @if (
+            form.controls.slug.touched &&
+            form.controls.slug.hasError('server')
+          ) {
+            <p class="mt-1 text-sm text-red-600">
+              {{ form.controls.slug.getError('server') }}
+            </p>
+          }
+
+      <p class="mt-1 text-xs text-gray-500">
+        /blog/{{ form.controls.slug.value }}
+      </p>
+    </div>
+
+    <div>
+      <label
+        for="summary"
+        class="block text-sm font-medium text-gray-700 mb-1"
+      >
+        Rövid összefoglaló
+      </label>
+
+      <editor
+        formControlName="summary"
+        [apiKey]="tinyMceApiKey"
+        [init]="shortSummaryEditorConfig"
+      />
+    </div>
+
+    <div>
+      <label
+        for="content"
+        class="block text-sm font-medium text-gray-700 mb-1"
+      >
+        Tartalom
+      </label>
+
+      <editor
+        formControlName="content"
+        [apiKey]="tinyMceApiKey"
+        [init]="contentEditorConfig"
+      />
+
+      <p class="mt-1 text-xs text-gray-500">
+        A tartalom HTML-t is tartalmazhat.
+      </p>
+    </div>
+    <div class="border-t border-gray-200 pt-6">
+
+  <div class="mb-4 flex items-center justify-between">
+    <div>
+      <h2 class="text-lg font-semibold text-gray-900">
+        Címkék
+      </h2>
+
+      <p class="text-sm text-gray-500">
+        A bejegyzéshez tartozó címkék.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      (click)="addTag()"
+      class="
+        rounded-md
+        border border-gray-300
+        px-3 py-2
+        text-sm font-medium
+        hover:bg-gray-50
+      "
+    >
+      + Címke
+    </button>
+  </div>
+
+  <div
+    formArrayName="postTags"
+    class="space-y-3"
+  >
+    @for (
+      tag of postTags.controls;
+      track $index;
+      let index = $index
+    ) {
+      <div
+        [formGroupName]="index"
+        class="
+          grid grid-cols-1
+          gap-3
+          md:grid-cols-[1fr_1fr_auto]
+        "
+      >
+
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Pl. családfakutatás"
+          class="
+            rounded-md
+            border border-gray-300
+            px-3 py-2
+          "
+        >
+
+        <input
+          type="text"
+          formControlName="slug"
+          placeholder="csaladfakutatas"
+          class="
+            rounded-md
+            border border-gray-300
+            px-3 py-2
+          "
+        >
+
+        <button
+          type="button"
+          (click)="removeTag(index)"
+          class="
+            rounded-md
+            border border-red-200
+            px-3 py-2
+            text-sm text-red-600
+            hover:bg-red-50
+          "
+        >
+          Törlés
+        </button>
+
+      </div>
+    }
+  </div>
+<div class="border-t border-gray-200 pt-6">
+
+  <div class="mb-4 flex items-center justify-between">
+    <div>
+      <h2 class="text-lg font-semibold text-gray-900">
+        Meta adatok
+      </h2>
+
+      <p class="text-sm text-gray-500">
+        További kulcs-érték meta adatok.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      (click)="addMeta()"
+      class="
+        rounded-md
+        border border-gray-300
+        px-3 py-2
+        text-sm font-medium
+        hover:bg-gray-50
+      "
+    >
+      + Meta adat
+    </button>
+  </div>
+
+  <div
+    formArrayName="postMetas"
+    class="space-y-3"
+  >
+    @for (
+      meta of postMetas.controls;
+      track $index;
+      let index = $index
+    ) {
+      <div
+        [formGroupName]="index"
+        class="
+          grid grid-cols-1
+          gap-3
+          md:grid-cols-[1fr_2fr_auto]
+        "
+      >
+
+        <input
+          type="text"
+          formControlName="key"
+          placeholder="Kulcs"
+          class="
+            rounded-md
+            border border-gray-300
+            px-3 py-2
+          "
+        >
+
+        <input
+          type="text"
+          formControlName="value"
+          placeholder="Érték"
+          class="
+            rounded-md
+            border border-gray-300
+            px-3 py-2
+          "
+        >
+
+        <button
+          type="button"
+          (click)="removeMeta(index)"
+          class="
+            rounded-md
+            border border-red-200
+            px-3 py-2
+            text-sm text-red-600
+            hover:bg-red-50
+          "
+        >
+          Törlés
+        </button>
+
+      </div>
+    }
+  </div>
+
+</div>
+</div>
+    <div
+      class="
+        flex items-center justify-end gap-3
+        border-t border-gray-200
+        pt-6
+      "
+    >
+      <button
+        type="button"
+        (click)="router.navigate(['/admin/blog'])"
+        class="
+          rounded-md
+          border border-gray-300
+          px-4 py-2
+          text-sm font-medium text-gray-700
+          hover:bg-gray-50
+        "
+      >
+        Mégse
+      </button>
+
+      <button
+        type="submit"
+        [disabled]="isSaving()"
+        class="
+          rounded-md
+          bg-gray-900
+          px-5 py-2
+          text-sm font-medium text-white
+          hover:bg-gray-700
+          disabled:cursor-not-allowed
+          disabled:opacity-50
+        "
+      >
+      @if (isSaving()) {
+        Mentés...
+      }
+      @else if (isEditMode()) {
+        Módosítások mentése
+      }
+      @else {
+        Bejegyzés létrehozása
+      }
+      </button>
+    </div>
+  </fieldset>
+
+  </form>
+
+</section>
+@if (isFilePickerOpen()) {
+
+  <app-file-picker
+    [imagesOnly]="true"
+    [publicOnly]="true"
+    (selected)="selectFile($event)"
+    (closed)="closeFilePicker()"
+  />
+
+}

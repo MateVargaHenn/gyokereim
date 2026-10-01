@@ -1,0 +1,134 @@
+<div class="flex min-h-screen">
+
+  <aside
+    class="flex w-[260px] flex-col bg-gray-800 p-6 text-white"
+  >
+    <div class="mb-8">
+      <h2 class="m-0 text-2xl">
+        Gyökereim
+      </h2>
+
+      <span class="text-sm text-gray-400">
+        Adminisztráció
+      </span>
+    </div>
+
+    <nav class="flex flex-1 flex-col gap-1">
+
+      <a
+        routerLink="/admin/vezerlopult"
+        routerLinkActive="bg-white/15 text-white font-semibold"
+        class="
+          block
+          rounded-md
+          px-3.5
+          py-3
+          text-gray-200
+          no-underline
+          transition-colors
+          duration-200
+          hover:bg-white/10
+        "
+      >
+        Vezérlőpult
+      </a>
+
+      <a
+        routerLink="/admin/blog"
+        routerLinkActive="bg-white/15 text-white font-semibold"
+        class="
+          block
+          rounded-md
+          px-3.5
+          py-3
+          text-gray-200
+          no-underline
+          transition-colors
+          duration-200
+          hover:bg-white/10
+        "
+      >
+        Blog
+      </a>
+
+      <a
+        routerLink="/admin/szolgaltatasok"
+        routerLinkActive="bg-white/15 text-white font-semibold"
+        class="
+          block
+          rounded-md
+          px-3.5
+          py-3
+          text-gray-200
+          no-underline
+          transition-colors
+          duration-200
+          hover:bg-white/10
+        "
+      >
+        Szolgáltatások
+      </a>
+
+      <a
+        routerLink="/admin/megrendelesek"
+        routerLinkActive="bg-white/15 text-white font-semibold"
+        class="
+          block
+          rounded-md
+          px-3.5
+          py-3
+          text-gray-200
+          no-underline
+          transition-colors
+          duration-200
+          hover:bg-white/10
+        "
+      >
+        Megrendelések
+      </a>
+
+      <a
+        routerLink="/admin/fajlok"
+        routerLinkActive="bg-white/15 text-white font-semibold"
+        class="
+          block
+          rounded-md
+          px-3.5
+          py-3
+          text-gray-200
+          no-underline
+          transition-colors
+          duration-200
+          hover:bg-white/10
+        "
+      >
+        Fájlok
+      </a>
+
+      <!-- <a
+        routerLink="/admin/web-beallitasok"
+        routerLinkActive="bg-white/15 text-white font-semibold"
+        class="
+          block
+          rounded-md
+          px-3.5
+          py-3
+          text-gray-200
+          no-underline
+          transition-colors
+          duration-200
+          hover:bg-white/10
+        "
+      >
+        Beállítások
+      </a> -->
+
+    </nav>
+
+    <div class="border-t border-gray-700 pt-4">
+      <button type="button" (click)="logout()" class="w-full rounded-md bg-red-600 cursor-pointer px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
+        Kijelentkezés
+      </button>
+    </div>
+  </aside>
+</div>

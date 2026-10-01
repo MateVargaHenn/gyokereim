@@ -1,0 +1,59 @@
+<section class="max-w-6xl mx-auto px-4 py-12">
+  <div class="mb-10 text-center">
+    <h1 class="text-3xl md:text-4xl font-semibold mb-4">Szolgáltatások</h1>
+    <p class="text-base md:text-lg text-stone-700">
+      Első alkalom díjmentes online konzultáció.
+    </p>
+    <p class="text-base md:text-lg text-stone-700">
+      További konzultációkat a csomag tartalmazza.
+    </p>
+  </div>
+
+  @if (isLoading()) {
+    <p class="text-center text-stone-600">Betöltés...</p>
+  }
+  @else if (error()) {
+    <p class="text-center text-red-600">{{ error() }}</p>
+  }
+  @else if (services$().length === 0) {
+    <p class="text-center text-stone-600">Nincs megjeleníthető szolgáltatás.</p>
+  }
+  @else {
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      @for (service of services$(); track service.id) {
+        <div class="flex flex-col h-full
+    rounded-2xl
+    border border-stone-200
+    bg-white/70
+    shadow-sm
+    p-6
+    transition-all duration-300
+    hover:-translate-y-1
+    hover:shadow-lg">
+          <h2 class="text-xl font-semibold mb-3 text-stone-900">
+            {{ service.name }}
+          </h2>
+
+          <div class="text-stone-700 leading-relaxed mb-4 flex-grow" [innerHTML]="service.shortDescription">
+          </div>
+
+          <div class="mt-4 mb-5">
+            <p class="text-sm text-stone-500">Csomag ára</p>
+
+            <p class="text-2xl font-semibold text-stone-900">
+              {{ service.price | number:'1.0-0':'hu-HU' }}
+              <span class="text-base font-normal">Ft</span>
+            </p>
+          </div>
+
+          <a
+            [routerLink]="'/szolgaltatasaim/' + service.slug"
+            class="mt-auto inline-flex justify-center items-center rounded-lg bg-stone-900 px-4 py-2 text-white font-medium hover:bg-stone-700 transition"
+          >
+            Bővebben
+          </a>
+        </div>
+      }
+    </div>
+  }
+</section>

@@ -1,0 +1,451 @@
+<section class="p-6">
+
+  <header
+    class="mb-8 flex items-center justify-between gap-4"
+  >
+
+    <div>
+      <h1
+        class="text-2xl font-bold text-gray-900"
+      >
+        Fájlok
+      </h1>
+
+      <p
+        class="mt-1 text-sm text-gray-500"
+      >
+        A weboldalon felhasználható képek és dokumentumok kezelése.
+      </p>
+    </div>
+
+    <div>
+
+      <input
+        #fileInput
+        type="file"
+        class="hidden"
+        (change)="onFileSelected($event)"
+      />
+
+      <button
+        type="button"
+        [disabled]="isUploading()"
+        (click)="fileInput.click()"
+        class="
+          inline-flex
+          items-center
+          justify-center
+          rounded-md
+          bg-gray-900
+          px-4 py-2
+          text-sm font-medium
+          text-white
+          transition-colors
+          hover:bg-gray-700
+          disabled:cursor-not-allowed
+          disabled:opacity-50
+        "
+      >
+        @if (isUploading()) {
+          Feltöltés...
+        }
+        @else {
+          + Fájl feltöltése
+        }
+      </button>
+
+    </div>
+
+  </header>
+
+  @if (error()) {
+
+    <div
+      class="
+        mb-6
+        rounded-md
+        border border-red-200
+        bg-red-50
+        px-4 py-3
+        text-sm text-red-700
+      "
+    >
+      {{ error() }}
+    </div>
+
+  }
+
+  @if (isLoading()) {
+
+    <div
+      class="py-12 text-center text-gray-500"
+    >
+      Betöltés...
+    </div>
+
+  }
+  @else if (files().length === 0) {
+
+    <div
+      class="
+        rounded-lg
+        border border-gray-200
+        bg-white
+        p-10
+        text-center
+      "
+    >
+      <p
+        class="text-sm text-gray-500"
+      >
+        Még nincs feltöltött fájl.
+      </p>
+    </div>
+
+  }
+  @else {
+
+    <div
+      class="
+        grid
+        gap-5
+        sm:grid-cols-2
+        xl:grid-cols-3
+        2xl:grid-cols-4
+      "
+    >
+
+      @for (file of files(); track file.id) {
+
+        <article
+          class="
+            overflow-hidden
+            rounded-lg
+            border border-gray-200
+            bg-white
+            transition-shadow
+            hover:shadow-md
+          "
+        >
+
+          <!-- Előnézet helye -->
+
+          <div
+            class="
+              flex
+              h-44
+              items-center
+              justify-center
+              bg-gray-50
+              text-gray-400
+            "
+          >
+
+            @if (isImage(file)) {
+
+            @if (imagePreviews()[file.id]; as previewUrl) {
+
+                <img
+                [src]="previewUrl"
+                [alt]="file.altText || file.fileName"
+                class="
+                    h-full
+                    w-full
+                    object-cover
+                "
+                />
+
+            }
+            @else {
+
+                <div class="text-center">
+                <div class="text-4xl">
+                    🖼️
+                </div>
+
+                <div class="mt-2 text-xs">
+                    Betöltés...
+                </div>
+                </div>
+
+            }
+
+            }
+            @else {
+
+              <div
+                class="text-center"
+              >
+                <div
+                  class="text-4xl"
+                >
+                  📄
+                </div>
+
+                <div
+                  class="mt-2 text-xs uppercase"
+                >
+                  {{ file.contentType }}
+                </div>
+              </div>
+
+            }
+
+          </div>
+
+<div class="p-4">
+
+  <div
+    class="truncate font-medium text-gray-900"
+    [title]="file.fileName"
+  >
+    {{ file.fileName }}
+  </div>
+
+  <div
+    class="mt-1 text-xs text-gray-500"
+  >
+    {{ formatFileSize(file.size) }}
+  </div>
+
+  <div
+    class="mt-1 text-xs text-gray-500"
+  >
+    {{ file.lastModified | date:'yyyy.MM.dd. HH:mm' }}
+  </div>
+
+  @if (file.title) {
+
+    <div
+      class="mt-3 text-sm text-gray-700"
+    >
+      {{ file.title }}
+    </div>
+
+  }
+
+  <div
+    class="mt-4 flex items-center justify-between border-t border-gray-100 pt-4"
+  >
+
+    @if (file.isPublic) {
+
+      <span
+        class="
+          rounded-full
+          bg-green-50
+          px-2.5 py-1
+          text-xs font-medium
+          text-green-700
+        "
+      >
+        Publikus
+      </span>
+
+      <button
+        type="button"
+        (click)="unpublishFile(file)"
+        class="
+          text-sm font-medium
+          text-gray-600
+          hover:underline
+          cursor-pointer
+        "
+      >
+        Priváttá tétel
+      </button>
+
+    }
+    @else {
+
+      <span
+        class="
+          rounded-full
+          bg-gray-100
+          px-2.5 py-1
+          text-xs font-medium
+          text-gray-600
+        "
+      >
+        Privát
+      </span>
+
+      <button
+        type="button"
+        (click)="publishFile(file)"
+        class="
+          text-sm font-medium
+          text-green-700
+          hover:underline
+          cursor-pointer
+        "
+      >
+        Publikálás
+      </button>
+
+    }
+
+        <button
+    type="button"
+    (click)="editFile(file)"
+    class="text-sm font-medium text-blue-600 hover:underline"
+    >
+    Szerkesztés
+    </button>
+
+  </div>
+
+</div>
+
+        </article>
+
+      }
+
+    </div>
+
+  }
+
+</section>
+
+@if (editingFile(); as file) {
+
+  <div
+    class="
+      fixed inset-0 z-50
+      flex items-center justify-center
+      bg-black/40
+      p-4
+    "
+  >
+
+    <div
+      class="
+        w-full max-w-lg
+        rounded-lg
+        bg-white
+        p-6
+        shadow-xl
+      "
+    >
+
+      <div class="mb-6">
+        <h2
+          class="text-lg font-semibold text-gray-900"
+        >
+          Fájl szerkesztése
+        </h2>
+
+        <p
+          class="mt-1 truncate text-sm text-gray-500"
+        >
+          {{ file.fileName }}
+        </p>
+      </div>
+
+      <form
+        [formGroup]="metadataForm"
+        (ngSubmit)="saveMetadata()"
+        class="space-y-5"
+      >
+
+        <div>
+
+          <label
+            for="title"
+            class="mb-1 block text-sm font-medium text-gray-700"
+          >
+            Cím
+          </label>
+
+          <input
+            id="title"
+            type="text"
+            formControlName="title"
+            class="
+              w-full
+              rounded-md
+              border border-gray-300
+              px-3 py-2
+            "
+          />
+
+        </div>
+
+        <div>
+
+          <label
+            for="altText"
+            class="mb-1 block text-sm font-medium text-gray-700"
+          >
+            Alternatív szöveg
+          </label>
+
+          <textarea
+            id="altText"
+            rows="3"
+            formControlName="altText"
+            class="
+              w-full
+              rounded-md
+              border border-gray-300
+              px-3 py-2
+            "
+          ></textarea>
+
+          <p
+            class="mt-1 text-xs text-gray-500"
+          >
+            Képeknél röviden írja le, mi látható a képen.
+          </p>
+
+        </div>
+
+        <div
+          class="flex justify-end gap-3"
+        >
+
+          <button
+            type="button"
+            (click)="closeEditModal()"
+            class="
+              rounded-md
+              border border-gray-300
+              px-4 py-2
+              text-sm font-medium
+              text-gray-700
+              hover:bg-gray-50
+            "
+          >
+            Mégse
+          </button>
+
+          <button
+            type="submit"
+            [disabled]="isSavingMetadata()"
+            class="
+              rounded-md
+              bg-gray-900
+              px-4 py-2
+              text-sm font-medium
+              text-white
+              hover:bg-gray-700
+              disabled:opacity-50
+            "
+          >
+            @if (isSavingMetadata()) {
+              Mentés...
+            }
+            @else {
+              Mentés
+            }
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+}

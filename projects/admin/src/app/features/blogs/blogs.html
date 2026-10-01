@@ -1,0 +1,353 @@
+<section class="p-6">
+
+  <header
+    class="
+      flex flex-col gap-4
+      sm:flex-row sm:items-center sm:justify-between
+      mb-8
+    "
+  >
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900">
+        Blogbejegyzések
+      </h1>
+
+      <p class="mt-1 text-sm text-gray-500">
+        A blogbejegyzések kezelése.
+      </p>
+    </div>
+
+    <a
+      routerLink="/admin/blog/uj"
+      class="
+        inline-flex items-center justify-center
+        rounded-md
+        bg-gray-900
+        px-4 py-2
+        text-sm font-medium text-white
+        hover:bg-gray-700
+        transition-colors
+      "
+    >
+      + Új bejegyzés
+    </a>
+  </header>
+
+  @if (isLoading()) {
+
+    <div class="py-12 text-center text-gray-500">
+      Betöltés...
+    </div>
+
+  }
+  @else if (error()) {
+
+    <div
+      class="
+        rounded-md
+        border border-red-200
+        bg-red-50
+        px-4 py-3
+        text-sm text-red-700
+      "
+    >
+      {{ error() }}
+    </div>
+
+  }
+  @else if (!posts() || posts()?.totalCount === 0) {
+
+    <div
+      class="
+        rounded-lg
+        border border-gray-200
+        bg-white
+        p-8
+        text-center
+      "
+    >
+      <p class="text-gray-500">
+        Jelenleg nincs megjeleníthető bejegyzés.
+      </p>
+    </div>
+
+  }
+  @else {
+
+    <div
+      class="
+        overflow-x-auto
+        rounded-lg
+        border border-gray-200
+        bg-white
+      "
+    >
+      <table class="min-w-full divide-y divide-gray-200">
+
+        <thead class="bg-gray-50">
+          <tr>
+
+            <th
+              class="
+                px-6 py-3
+                text-left
+                text-xs font-semibold uppercase tracking-wider
+                text-gray-500
+              "
+            >
+              Cím
+            </th>
+
+            <th
+              class="
+                px-6 py-3
+                text-left
+                text-xs font-semibold uppercase tracking-wider
+                text-gray-500
+              "
+            >
+              Slug
+            </th>
+
+            <th
+              class="
+                px-6 py-3
+                text-left
+                text-xs font-semibold uppercase tracking-wider
+                text-gray-500
+              "
+            >
+              Publikálva
+            </th>
+
+                        <th
+              class="
+                px-6 py-3
+                text-left
+                text-xs font-semibold uppercase tracking-wider
+                text-gray-500
+              "
+            >
+              Utoljára módosítva
+            </th>
+
+            <th
+              class="
+                px-6 py-3
+                text-right
+                text-xs font-semibold uppercase tracking-wider
+                text-gray-500
+              "
+            >
+              Műveletek
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500"
+            >
+              Státusz
+            </th>
+          </tr>
+        </thead>
+
+        <tbody class="divide-y divide-gray-200">
+
+          @for (post of posts()?.items ?? []; track post.id) {
+
+            <tr class="hover:bg-gray-50">
+
+              <td class="px-6 py-4">
+                <div class="font-medium text-gray-900">
+                  {{ post.title }}
+                </div>
+              </td>
+
+              <td
+                class="
+                  px-6 py-4
+                  text-sm text-gray-500
+                  whitespace-nowrap
+                "
+              >
+                {{ post.slug }}
+              </td>
+
+              <td
+                class="
+                  px-6 py-4
+                  text-sm text-gray-500
+                  whitespace-nowrap
+                "
+              >
+                @if (post.publishedAt) {
+                  {{ post.publishedAt | date:'yyyy. MM. dd. HH:mm' }}
+                }
+                @else {
+                  —
+                }
+              </td>
+
+                            <td
+                class="
+                  px-6 py-4
+                  text-sm text-gray-500
+                  whitespace-nowrap
+                "
+              >
+                @if (post.updatedAt) {
+                  {{ post.updatedAt | date:'yyyy. MM. dd. HH:mm' }}
+                }
+                @else {
+                  —
+                }
+              </td>
+
+              <td class="px-6 py-4">
+                <div class="flex items-center gap-3">
+
+                  <a
+                    [routerLink]="['/admin/blog', post.id]"
+                    class="text-sm font-medium text-blue-600 hover:underline"
+                  >
+                    Szerkesztés
+                  </a>
+
+                  @if (post.postStatus === PostStatus.Published) {
+                    <button
+                      type="button"
+                      (click)="movePostToDraft(post.id)"
+                      class="text-sm font-medium text-gray-600 hover:underline"
+                    >
+                      Vissza piszkozatba
+                    </button>
+                  }
+                  @else {
+                    <button
+                      type="button"
+                      (click)="publishPost(post.id)"
+                      class="text-sm font-medium text-green-700 hover:underline"
+                    >
+                      Publikálás
+                    </button>
+                  }
+                  <button
+                    type="button"
+                    (click)="deletePost(post.id, post.title)"
+                    class="text-sm font-medium text-red-600 hover:underline"
+                  >
+                    Törlés
+                  </button>
+                </div>
+              </td>
+              <td class="px-6 py-4">
+                @if (post.postStatus == PostStatus.Published) {
+                  <span
+                    class="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700"
+                  >
+                    Publikálva
+                  </span>
+                }
+                @else if (post.postStatus == PostStatus.Draft) {
+                  <span
+                    class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700"
+                  >
+                    Piszkozat
+                  </span>
+                }
+                @else if (post.postStatus == PostStatus.Archived) {
+                  <span
+                    class="rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-700"
+                  >
+                    Archiválva
+                  </span>
+                }
+              </td>
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+    </div>
+
+    @if (posts(); as result) {
+
+      @if (result.totalPages > 1) {
+
+        <nav
+          class="
+            mt-6
+            flex items-center justify-center
+            gap-2
+          "
+          aria-label="Lapozás"
+        >
+
+          @if (result.page > 1) {
+            <button
+              type="button"
+              (click)="loadPosts(result.page - 1)"
+              class="
+                rounded-md
+                border border-gray-300
+                px-3 py-2
+                text-sm text-gray-700
+                hover:bg-gray-50
+              "
+            >
+              ← Előző
+            </button>
+          }
+
+          @for (
+            page of getPageNumbers(result.totalPages);
+            track page
+          ) {
+
+            <button
+              type="button"
+              (click)="loadPosts(page)"
+              class="
+                min-w-10
+                rounded-md
+                border
+                px-3 py-2
+                text-sm
+              "
+              [class.bg-gray-900]="page === result.page"
+              [class.text-white]="page === result.page"
+              [class.border-gray-900]="page === result.page"
+              [class.border-gray-300]="page !== result.page"
+              [class.text-gray-700]="page !== result.page"
+              [class.hover:bg-gray-50]="page !== result.page"
+            >
+              {{ page }}
+            </button>
+
+          }
+
+          @if (result.page < result.totalPages) {
+            <button
+              type="button"
+              (click)="loadPosts(result.page + 1)"
+              class="
+                rounded-md
+                border border-gray-300
+                px-3 py-2
+                text-sm text-gray-700
+                hover:bg-gray-50
+              "
+            >
+              Következő →
+            </button>
+          }
+
+        </nav>
+
+      }
+
+    }
+
+  }
+
+</section>

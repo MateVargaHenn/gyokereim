@@ -1,0 +1,28 @@
+@if (visible()) {
+<div class="wrapper backdrop-blur-2xl bg-white/30 fixed bottom-10 left-0 right-0 z-100 p-4 flex flex-col items-center justify-center gap-4">
+    
+      <button
+    type="button"
+    class="cursor-pointer underline"
+    (click)="openSettings()">
+    Sütibeállítások
+  </button>
+    <div class="cookie-panel">
+    <p>
+    A működéshez szükséges sütik mellett az Ön engedélyével
+    Google Analytics segítségével mérjük a látogatottságot
+    és az oldalak használatát. A statisztikai mérés elutasítása
+    mellett is használhatja a weboldalt.
+    </p>        
+    <p><a class="cursor-pointer link mt-2" routerLink="/cookie">Sütik kezelése</a></p>
+    </div>
+    <div class="cookie-panel-actions flex flex-row items-center justify-center gap-4">
+        <button type="button" class="cursor-pointer" (click)="acceptCookies()">
+        Statisztikai sütik elfogadása
+        </button>
+        <button type="button" class="cursor-pointer" (click)="declineCookies()">
+        Statisztikai sütik elutasítása
+        </button>
+    </div>
+</div>
+}

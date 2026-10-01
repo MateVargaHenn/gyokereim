@@ -1,0 +1,34 @@
+<div class="max-w-sm rounded overflow-hidden py-1.5 my-1.5 mx-auto">
+    <div class="flex flex-col h-full
+    rounded-2xl
+    border border-stone-200
+    bg-white/70
+    shadow-sm
+    p-6
+    transition-all duration-300
+    hover:-translate-y-1
+    hover:shadow-lg">
+        @if (isLoading()) {
+            <p>Betöltés...</p>
+        }
+        @else if (error()) {
+            <p>{{ error() }}</p>
+        }
+        @else if (!service$()) {
+            <p>Nincs megjeleníthető szolgáltatás.</p>
+        }
+        @else {
+            <h2 class="text-xl font-semibold mb-3 text-stone-900">{{ service$()?.name }}</h2>
+            <p class="text-stone-700 leading-relaxed mb-4 grow" [innerHTML]="service$()?.description"></p>
+          <div class="mt-4 mb-5">
+            <p class="text-sm text-stone-500">Csomag ára</p>
+
+            <p class="text-2xl font-semibold text-stone-900">
+              {{ service$()?.price | number:'1.0-0':'hu-HU' }}
+              <span class="text-base font-normal">Ft</span>
+            </p>
+          </div>
+            <a routerLink="/megrendeles/{{ service$()?.slug }}" class="mt-auto inline-flex justify-center items-center rounded-lg bg-stone-900 px-4 py-2 text-white font-medium hover:bg-stone-700 transition cursor-pointer">Megrendelem</a>
+        }
+    </div>
+</div>

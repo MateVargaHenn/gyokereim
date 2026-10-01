@@ -1,0 +1,89 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
+@import 'quill/dist/quill.snow.css';
+@import 'quill-resize-module/dist/resize.css';
+:root {
+  /* háttér */
+      --bg: #fcf2e5;
+      
+      --bg-light: #f8eddc;
+      --sand: #d8c1a1;
+      --sand-dark: #b79b76;
+      --text: #2b2521;
+      --muted: #6f6256;
+      --line: #4b4038;
+      --button: #2f2924;
+      --button-hover: #3a271b;
+      --button-text: #f5ead9;
+      --button-text-hover: #fffaf0;
+  /* gyökér / fő grafika */
+  --color-root: #1f1712;
+  --color-root-soft: #3a271b;
+
+  /* szöveg */
+  --color-text: #2b2926;
+  --color-text-muted: #6f655c;
+
+  /* természetes kiemelés */
+  --color-accent: #6f4e37;
+  --color-accent-light: #b8946b;
+
+  /* buborék */
+  --color-bubble-bg: #fff8e8;
+  --color-bubble-border: #d6b98c;
+
+  /* CTA */
+  --color-cta-bg: #3a271b;
+  --color-cta-text: #fffaf0;
+}
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 24px;
+}
+
+.page-header h1 {
+    margin: 0;
+}
+
+.page-header p {
+    margin: 4px 0 0;
+    color: #6b7280;
+}
+.create-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 16px;
+
+    background: #1f2937;
+    color: white;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.create-button:hover {
+    background: #374151;
+}
+
+.plus {
+    font-size: 20px;
+    line-height: 1;
+}

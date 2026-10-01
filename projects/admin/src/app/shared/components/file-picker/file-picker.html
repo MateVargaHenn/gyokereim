@@ -1,0 +1,245 @@
+<div
+  class="
+    fixed inset-0 z-[9999]
+    flex items-center justify-center
+    bg-black/40
+    p-4
+  "
+  (click)="close()"
+>
+
+  <div
+    class="
+      flex
+      max-h-[85vh]
+      w-full
+      max-w-5xl
+      flex-col
+      overflow-hidden
+      rounded-lg
+      bg-white
+      shadow-xl
+    "
+    (click)="$event.stopPropagation()"
+  >
+
+    <header
+      class="
+        flex
+        items-center
+        justify-between
+        border-b
+        border-gray-200
+        px-6 py-4
+      "
+    >
+
+      <div>
+        <h2
+          class="text-lg font-semibold text-gray-900"
+        >
+          Fájl kiválasztása
+        </h2>
+
+        <p
+          class="mt-1 text-sm text-gray-500"
+        >
+          Válasszon a feltöltött fájlok közül.
+        </p>
+      </div>
+
+      <button
+        type="button"
+        (click)="close()"
+        class="
+          rounded-md
+          px-3 py-2
+          text-sm
+          text-gray-500
+          hover:bg-gray-100
+        "
+      >
+        Bezárás
+      </button>
+
+    </header>
+
+    <div
+      class="min-h-0 flex-1 overflow-y-auto p-6"
+    >
+
+      @if (isLoading()) {
+
+        <div
+          class="py-12 text-center text-gray-500"
+        >
+          Betöltés...
+        </div>
+
+      }
+      @else if (error()) {
+
+        <div
+          class="
+            rounded-md
+            border border-red-200
+            bg-red-50
+            px-4 py-3
+            text-sm text-red-700
+          "
+        >
+          {{ error() }}
+        </div>
+
+      }
+      @else if (visibleFiles().length === 0) {
+
+        <div
+          class="
+            rounded-lg
+            border border-gray-200
+            p-10
+            text-center
+            text-sm
+            text-gray-500
+          "
+        >
+          Nincs választható fájl.
+        </div>
+
+      }
+      @else {
+
+        <div
+          class="
+            grid
+            gap-4
+            sm:grid-cols-2
+            md:grid-cols-3
+            lg:grid-cols-4
+          "
+        >
+
+          @for (
+            file of visibleFiles();
+            track file.id
+          ) {
+
+            <button
+              type="button"
+              (click)="selectFile(file)"
+              class="
+                overflow-hidden
+                rounded-lg
+                border border-gray-200
+                bg-white
+                text-left
+                transition
+                hover:border-blue-400
+                hover:shadow-md
+              "
+            >
+
+              <div
+                class="
+                  flex
+                  h-36
+                  items-center
+                  justify-center
+                  overflow-hidden
+                  bg-gray-50
+                "
+              >
+
+                @if (
+                  file.contentType.startsWith(
+                    'image/'
+                  )
+                ) {
+
+                  @if (
+                    imagePreviews()[file.id];
+                    as previewUrl
+                  ) {
+
+                    <img
+                      [src]="previewUrl"
+                      [alt]="
+                        file.altText ||
+                        file.title ||
+                        file.fileName
+                      "
+                      class="
+                        h-full
+                        w-full
+                        object-cover
+                      "
+                    />
+
+                  }
+                  @else {
+
+                    <span
+                      class="text-sm text-gray-400"
+                    >
+                      Betöltés...
+                    </span>
+
+                  }
+
+                }
+                @else {
+
+                  <span class="text-4xl">
+                    📄
+                  </span>
+
+                }
+
+              </div>
+
+              <div class="p-3">
+
+                <div
+                  class="
+                    truncate
+                    text-sm font-medium
+                    text-gray-900
+                  "
+                >
+                  {{
+                    file.title ||
+                    file.fileName
+                  }}
+                </div>
+
+                @if (file.title) {
+
+                  <div
+                    class="
+                      mt-1
+                      truncate
+                      text-xs
+                      text-gray-500
+                    "
+                  >
+                    {{ file.fileName }}
+                  </div>
+
+                }
+
+              </div>
+
+            </button>
+
+          }
+
+        </div>
+
+      }
+
+    </div>
+
+  </div>
+
+</div>

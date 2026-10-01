@@ -1,0 +1,196 @@
+<section class="max-w-4xl mx-auto px-4 py-12">
+
+  @if (post$(); as post) {
+
+    <a
+      routerLink="/blog"
+      class="
+        inline-flex
+        items-center
+        gap-2
+        mb-8
+        text-sm
+        text-[#6b5845]
+        hover:text-[#3f3024]
+        hover:underline
+        underline-offset-4
+      "
+    >
+      ← Vissza a bloghoz
+    </a>
+
+    <article>
+
+      <header class="mb-10">
+
+        @if (post.publishedAt) {
+          <time
+            class="
+              block
+              mb-3
+              text-sm
+              text-[#806f5d]
+            "
+          >
+            {{ post.publishedAt | date:'yyyy. MM. dd.' }}
+          </time>
+        }
+
+        <h1
+          class="
+            text-4xl
+            font-bold
+            leading-tight
+            mb-5
+          "
+        >
+          {{ post.title }}
+        </h1>
+
+        <div
+          class="
+            max-w-3xl
+            text-lg
+            text-[#6b5845]
+            leading-8
+          "
+          [innerHTML]="post.summary"
+        >
+      </div>
+
+        <div
+          class="
+            mt-6
+            flex
+            items-center
+            gap-2
+            text-sm
+            text-[#6b5845]
+          "
+        >
+
+        </div>
+
+      </header>
+
+      <div class="border-t border-[#b9a78f] mb-10"></div>
+
+      <div
+        class="blog-content"
+        [innerHTML]="post.content">
+      </div>
+
+      <div class="border-t border-[#b9a78f] mt-12 pt-6">
+
+        <a
+          routerLink="/blog"
+          class="
+            text-sm
+            font-medium
+            text-[#4f4032]
+            hover:underline
+            underline-offset-4
+          "
+        >
+          ← Vissza az összes bejegyzéshez
+        </a>
+
+      </div>
+      <div
+  class="
+    mt-12
+    pt-6
+    border-t
+    border-[#b9a78f]
+  "
+>
+  <p class="mb-4 font-semibold">
+    Bejegyzés megosztása
+  </p>
+
+  <div class="flex flex-wrap items-center gap-3">
+
+    <button
+      type="button"
+      (click)="sharePost(post)"
+      class="
+        px-4 py-2
+        rounded-lg
+        border border-[#b9a78f]
+        hover:bg-[#f1e5d3]
+        transition
+        cursor-pointer
+      "
+    >
+    <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 12C9 13.3807 7.88071 14.5 6.5 14.5C5.11929 14.5 4 13.3807 4 12C4 10.6193 5.11929 9.5 6.5 9.5C7.88071 9.5 9 10.6193 9 12Z" stroke="#1C274C" stroke-width="1.5"/>
+<path d="M14 6.5L9 10" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M14 17.5L9 14" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M19 18.5C19 19.8807 17.8807 21 16.5 21C15.1193 21 14 19.8807 14 18.5C14 17.1193 15.1193 16 16.5 16C17.8807 16 19 17.1193 19 18.5Z" stroke="#1C274C" stroke-width="1.5"/>
+<path d="M19 5.5C19 6.88071 17.8807 8 16.5 8C15.1193 8 14 6.88071 14 5.5C14 4.11929 15.1193 3 16.5 3C17.8807 3 19 4.11929 19 5.5Z" stroke="#1C274C" stroke-width="1.5"/>
+</svg>
+    </button>
+
+    <button
+      type="button"
+      (click)="shareOnFacebook()"
+      class="
+        px-4 py-2
+        rounded-lg
+        border border-[#b9a78f]
+        hover:bg-[#f1e5d3]
+        transition
+        cursor-pointer
+      "
+    >
+    <svg width="16px" height="16px" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg" fill="none"><path stroke="#000000" stroke-linecap="round" stroke-width="12" d="M96 170c40.869 0 74-33.131 74-74 0-40.87-33.131-74-74-74-40.87 0-74 33.13-74 74 0 40.869 33.13 74 74 74Zm0 0v-62m30-48h-10c-11.046 0-20 8.954-20 20v28m0 0H74m22 0h22"/></svg>
+
+    </button>
+
+    <button
+      type="button"
+      (click)="shareOnLinkedIn()"
+      class="
+        px-4 py-2
+        rounded-lg
+        border border-[#b9a78f]
+        hover:bg-[#f1e5d3]
+        transition
+        cursor-pointer
+      "
+    >
+    <svg width="16px" height="16px" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg" fill="none"><rect width="132" height="132" x="30" y="30" stroke="#000000" stroke-width="12" rx="16"/><path stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="12" d="M66 86v44"/><circle cx="66" cy="64" r="8" fill="#000000"/><path stroke="#000000" stroke-linecap="round" stroke-width="12" d="M126 130v-26c0-9.941-8.059-18-18-18v0c-9.941 0-18 8.059-18 18v26"/></svg>
+
+    </button>
+
+    <button
+      type="button"
+      (click)="copyLink()"
+      class="
+        px-4 py-2
+        rounded-lg
+        border border-[#b9a78f]
+        hover:bg-[#f1e5d3]
+        transition
+        cursor-pointer
+      "
+    >
+    <svg width="16px" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.05025 1.53553C8.03344 0.552348 9.36692 0 10.7574 0C13.6528 0 16 2.34721 16 5.24264C16 6.63308 15.4477 7.96656 14.4645 8.94975L12.4142 11L11 9.58579L13.0503 7.53553C13.6584 6.92742 14 6.10264 14 5.24264C14 3.45178 12.5482 2 10.7574 2C9.89736 2 9.07258 2.34163 8.46447 2.94975L6.41421 5L5 3.58579L7.05025 1.53553Z" fill="#000000"/>
+<path d="M7.53553 13.0503L9.58579 11L11 12.4142L8.94975 14.4645C7.96656 15.4477 6.63308 16 5.24264 16C2.34721 16 0 13.6528 0 10.7574C0 9.36693 0.552347 8.03344 1.53553 7.05025L3.58579 5L5 6.41421L2.94975 8.46447C2.34163 9.07258 2 9.89736 2 10.7574C2 12.5482 3.45178 14 5.24264 14C6.10264 14 6.92742 13.6584 7.53553 13.0503Z" fill="#000000"/>
+<path d="M5.70711 11.7071L11.7071 5.70711L10.2929 4.29289L4.29289 10.2929L5.70711 11.7071Z" fill="#000000"/>
+</svg>
+    </button>
+
+  </div>
+</div>
+
+    </article>
+  }
+  @else {
+    <p class="text-[#6b5845]">
+      Bejegyzés betöltése...
+    </p>
+  }
+
+</section>

@@ -1,0 +1,327 @@
+<div class="p-6 lg:p-10">
+  <div class="mx-auto max-w-7xl">
+
+    <header class="mb-8">
+      <h1 class="text-3xl font-semibold text-gray-900">
+        Vezérlőpult
+      </h1>
+
+      <p class="mt-2 text-sm text-gray-500">
+        A Gyökereim weboldal áttekintése és legfontosabb teendői.
+      </p>
+    </header>
+
+    <!-- Összegző kártyák -->
+    <section class="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+
+      <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <p class="text-sm font-medium text-gray-500">
+          Új megrendelések
+        </p>
+
+        <p class="mt-3 text-3xl font-semibold text-gray-900">
+          {{ newOrdersCount() ?? 0}}
+        </p>
+
+        <a
+          routerLink="/admin/megrendelesek"
+          class="mt-4 inline-block text-sm font-medium text-emerald-700 hover:underline"
+        >
+          Megtekintés →
+        </a>
+      </div>
+
+      <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <p class="text-sm font-medium text-gray-500">
+          Folyamatban
+        </p>
+
+        <p class="mt-3 text-3xl font-semibold text-gray-900">
+          5
+        </p>
+
+        <a
+          routerLink="/admin/megrendelesek"
+          class="mt-4 inline-block text-sm font-medium text-emerald-700 hover:underline"
+        >
+          Megtekintés →
+        </a>
+      </div>
+
+      <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <p class="text-sm font-medium text-gray-500">
+          Piszkozat bejegyzések
+        </p>
+
+        <p class="mt-3 text-3xl font-semibold text-gray-900">
+          2
+        </p>
+
+        <a
+          routerLink="/admin/blog"
+          class="mt-4 inline-block text-sm font-medium text-emerald-700 hover:underline"
+        >
+          Megtekintés →
+        </a>
+      </div>
+
+      <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <p class="text-sm font-medium text-gray-500">
+          Aktív szolgáltatások
+        </p>
+
+        <p class="mt-3 text-3xl font-semibold text-gray-900">
+          {{servicesCount() ?? 0}}
+        </p>
+
+        <a
+          routerLink="/admin/szolgaltatasok"
+          class="mt-4 inline-block text-sm font-medium text-emerald-700 hover:underline"
+        >
+          Megtekintés →
+        </a>
+      </div>
+
+    </section>
+
+    <!-- Középső rész -->
+    <section class="mt-8 grid gap-6 xl:grid-cols-[2fr_1fr]">
+
+      <!-- Legutóbbi megrendelések -->
+      <div class="rounded-xl border border-gray-200 bg-white shadow-sm">
+
+        <div class="flex items-center justify-between border-b border-gray-100 px-6 py-5">
+          <div>
+            <h2 class="text-lg font-semibold text-gray-900">
+              Legutóbbi megrendelések
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-500">
+              A legutóbb beérkezett megrendelések.
+            </p>
+          </div>
+
+          <a
+            routerLink="/admin/megrendelesek"
+            class="text-sm font-medium text-emerald-700 hover:underline"
+          >
+            Összes →
+          </a>
+        </div>
+
+        <div class="divide-y divide-gray-100">
+          @for (order in OrderDetails()) {
+          <div class="flex items-center justify-between gap-4 px-6 py-4">
+            <div>
+              <p class="font-medium text-gray-900">
+                {{order.customerName}}
+              </p>
+              <p class="mt-1 text-sm text-gray-500">
+                {{order.serviceName}}
+              </p>
+            </div>
+
+            <span
+              class="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700"
+            >
+              Új
+            </span>
+          </div>
+          }
+
+          <div class="flex items-center justify-between gap-4 px-6 py-4">
+            <div>
+              <p class="font-medium text-gray-900">
+                Nagy Anna
+              </p>
+              <p class="mt-1 text-sm text-gray-500">
+                Kutató 5
+              </p>
+            </div>
+
+            <span
+              class="rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700"
+            >
+              Folyamatban
+            </span>
+          </div>
+
+          <div class="flex items-center justify-between gap-4 px-6 py-4">
+            <div>
+              <p class="font-medium text-gray-900">
+                Tóth Gábor
+              </p>
+              <p class="mt-1 text-sm text-gray-500">
+                Néveredet
+              </p>
+            </div>
+
+            <span
+              class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700"
+            >
+              Konzultáció
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Gyors műveletek -->
+      <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+
+        <h2 class="text-lg font-semibold text-gray-900">
+          Gyors műveletek
+        </h2>
+
+        <p class="mt-1 text-sm text-gray-500">
+          Gyakran használt adminisztrációs funkciók.
+        </p>
+
+        <div class="mt-6 flex flex-col gap-3">
+
+          <a
+            routerLink="/admin/blog/uj"
+            class="
+              flex items-center justify-between
+              rounded-lg border border-gray-200
+              px-4 py-3
+              text-sm font-medium text-gray-700
+              transition
+              hover:border-emerald-300
+              hover:bg-emerald-50
+              hover:text-emerald-800
+            "
+          >
+            <span>Új blogbejegyzés</span>
+            <span>+</span>
+          </a>
+
+          <a
+            routerLink="/admin/szolgaltatasok/uj"
+            class="
+              flex items-center justify-between
+              rounded-lg border border-gray-200
+              px-4 py-3
+              text-sm font-medium text-gray-700
+              transition
+              hover:border-emerald-300
+              hover:bg-emerald-50
+              hover:text-emerald-800
+            "
+          >
+            <span>Új szolgáltatás</span>
+            <span>+</span>
+          </a>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Blog -->
+    <section class="mt-8 rounded-xl border border-gray-200 bg-white shadow-sm">
+
+      <div class="flex items-center justify-between border-b border-gray-100 px-6 py-5">
+        <div>
+          <h2 class="text-lg font-semibold text-gray-900">
+            Legutóbbi blogbejegyzések
+          </h2>
+
+          <p class="mt-1 text-sm text-gray-500">
+            A legutóbb módosított tartalmak.
+          </p>
+        </div>
+
+        <a
+          routerLink="/admin/blog"
+          class="text-sm font-medium text-emerald-700 hover:underline"
+        >
+          Összes →
+        </a>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+
+          <thead class="bg-gray-50 text-xs uppercase text-gray-500">
+            <tr>
+              <th class="px-6 py-3 font-medium">
+                Bejegyzés
+              </th>
+
+              <th class="px-6 py-3 font-medium">
+                Állapot
+              </th>
+
+              <th class="px-6 py-3 font-medium">
+                Módosítva
+              </th>
+
+              <th class="px-6 py-3"></th>
+            </tr>
+          </thead>
+
+          <tbody class="divide-y divide-gray-100">
+
+            <tr>
+              <td class="px-6 py-4 font-medium text-gray-900">
+                Családfakutatás régi újságokból
+              </td>
+
+              <td class="px-6 py-4">
+                <span
+                  class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700"
+                >
+                  Publikált
+                </span>
+              </td>
+
+              <td class="px-6 py-4 text-gray-500">
+                2026. 09. 21.
+              </td>
+
+              <td class="px-6 py-4 text-right">
+                <a
+                  href="#"
+                  class="font-medium text-emerald-700 hover:underline"
+                >
+                  Szerkesztés
+                </a>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-6 py-4 font-medium text-gray-900">
+                Hogyan kezdjünk családfát kutatni?
+              </td>
+
+              <td class="px-6 py-4">
+                <span
+                  class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600"
+                >
+                  Piszkozat
+                </span>
+              </td>
+
+              <td class="px-6 py-4 text-gray-500">
+                2026. 09. 19.
+              </td>
+
+              <td class="px-6 py-4 text-right">
+                <a
+                  href="#"
+                  class="font-medium text-emerald-700 hover:underline"
+                >
+                  Szerkesztés
+                </a>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+
+  </div>
+</div>

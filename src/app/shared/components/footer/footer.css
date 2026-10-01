@@ -1,74 +1,187 @@
-.footer-section {
-  position: absolute;
+.site-footer {
+  position: relative;
   width: 100%;
-  min-height: 260px;
   overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 32px;
-  background: var(--bg);
+
+  padding:
+    32px
+    clamp(24px, 6vw, 120px)
+    42px;
+
+  background: #f8eddd;
+  color: #3c2415;
 }
 
-.footer {
+
+
+/* Alsó tartalom */
+
+.footer-content {
   position: relative;
   z-index: 2;
 
+  max-width: 1380px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1.25fr 1fr;
+  gap: clamp(30px, 5vw, 90px);
+}
+
+.footer-brand {
+  padding-right: 30px;
+  border-right: 1px solid rgba(93, 57, 30, 0.13);
+}
+
+.footer-logo {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 22px;
+  gap: 10px;
 
-  color: var(--muted);
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 15px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-.footer a {
-  color: inherit;
+.footer-root-icon {
+  font-size: 32px;
+}
+
+.footer-brand p {
+  margin: 12px 0 0;
+  color: rgba(60, 36, 21, 0.68);
+  font-size: 13px;
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footer-column h3 {
+  margin: 0 0 13px;
+
+  color: rgba(60, 36, 21, 0.7);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.footer-column a {
+  margin-bottom: 6px;
+
+  color: #3c2415;
+  font-size: 13px;
+  line-height: 1.35;
   text-decoration: none;
+
+  transition: opacity 150ms ease;
 }
 
-.footer span {
-  opacity: 0.55;
+.footer-column a:hover {
+  opacity: 0.58;
 }
 
-.waves {
+/* Közösségi ikonok */
+
+.footer-socials {
+  display: flex;
+  gap: 9px;
+  margin-top: 12px;
+}
+
+.footer-socials a {
+  width: 28px;
+  height: 28px;
+  margin: 0;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(60, 36, 21, 0.45);
+  border-radius: 50%;
+
+  font-family: Arial, sans-serif;
+}
+.madeby {
+  margin-top: 12px;
+  font-size: 11px;
+  color: rgba(60, 36, 21, 0.68);
+}
+/* Háttérhullámok */
+
+.footer-waves {
   position: absolute;
-  left: 0;
+  z-index: 0;
+
   right: 0;
   bottom: 0;
+  left: 0;
 
-  height: 34vh;
-  z-index: 1;
+  height: 130px;
 
   overflow: hidden;
   pointer-events: none;
 }
 
-.wave {
+.footer-wave {
   position: absolute;
-  left: -5%;
-  width: 110%;
-  height: 80%;
+  left: -10%;
 
-  border-radius: 50% 50% 0 0;
-  background: rgba(183, 155, 118, 0.18);
+  width: 120%;
+  height: 130px;
+
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
 }
 
-.wave.one {
-  bottom: -45%;
-  transform: rotate(2deg);
+.wave-one {
+  bottom: -90px;
+  background: rgba(183, 155, 118, 0.15);
+  transform: rotate(1.5deg);
 }
 
-.wave.two {
-  bottom: -62%;
-  background: rgba(183, 155, 118, 0.25);
-  transform: rotate(-4deg);
+.wave-two {
+  bottom: -108px;
+  background: rgba(183, 155, 118, 0.2);
+  transform: rotate(-2deg);
 }
 
-.wave.three {
-  bottom: -78%;
-  background: rgba(183, 155, 118, 0.32);
-  transform: rotate(3deg);
+/* Tablet */
+
+@media (max-width: 950px) {
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-brand {
+    padding-right: 0;
+    border-right: 0;
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 640px) {
+  .site-footer {
+    padding-inline: 20px;
+  }
+
+
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .footer-column {
+    padding-top: 20px;
+    border-top: 1px solid rgba(93, 57, 30, 0.12);
+  }
+
+  .footer-brand {
+    padding-bottom: 4px;
+  }
 }

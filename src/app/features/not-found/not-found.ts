@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
+import { Router, RouterLink, } from '@angular/router';
 
 @Component({
   selector: 'app-not-found',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './not-found.html',
   styleUrl: './not-found.css',
 })
 export class NotFound {
 
-  goBack(): void {
-    window.history.back();
-  }
 }

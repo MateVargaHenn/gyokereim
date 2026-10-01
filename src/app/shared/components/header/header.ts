@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { Menu } from '@components/menu/menu';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [Menu],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })

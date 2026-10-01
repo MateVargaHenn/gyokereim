@@ -1,0 +1,64 @@
+<nav class="relative">
+  <!-- Mobil fejléc -->
+  <div class="flex items-center justify-end p-2 md:hidden">
+    <button
+      type="button"
+      class="p-2"
+      aria-label="Menü megnyitása"
+      (click)="toggleMenu()">
+
+      @if (menuOpen()) {
+        <!-- X -->
+        <span class="text-3xl">&times;</span>
+      }
+      @else {
+        <!-- Hamburger -->
+        <span class="text-3xl">&#9776;</span>
+      }
+    </button>
+  </div>
+
+  <!-- Menü -->
+  <ul
+    class="
+      items-center
+      justify-center
+      uppercase
+      shadow-md
+      rounded-t-lg
+
+      flex-col
+      space-y-2
+      p-4
+
+      md:flex
+      md:flex-row
+      md:space-y-0
+      md:space-x-4
+      md:p-2
+    "
+    [class.hidden]="!menuOpen()">
+
+    <li>
+      <a routerLink="/kezdolap" (click)="closeMenu()">Kezdőlap</a>
+    </li>
+
+    <li>
+      <a routerLink="/rolam" (click)="closeMenu()">Rólam</a>
+    </li>
+
+    <li>
+      <a routerLink="/szolgaltatasaim" (click)="closeMenu()">
+        Szolgáltatásaim
+      </a>
+    </li>
+
+    <li>
+      <a routerLink="/blog" (click)="closeMenu()">Blog</a>
+    </li>
+
+    <li>
+      <a routerLink="/kapcsolat" (click)="closeMenu()">Kapcsolat</a>
+    </li>
+  </ul>
+</nav>

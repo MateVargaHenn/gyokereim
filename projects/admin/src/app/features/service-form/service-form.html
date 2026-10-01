@@ -1,0 +1,288 @@
+<section class="p-6">
+
+  <header class="mb-8">
+    <h1 class="text-2xl font-bold text-gray-900">
+      @if (isEditMode()) {
+        Szolgáltatás szerkesztése
+      }
+      @else {
+        Új szolgáltatás
+      }
+    </h1>
+
+    <p class="mt-1 text-sm text-gray-500">
+      A szolgáltatás adatainak kezelése.
+    </p>
+  </header>
+
+  @if (error()) {
+    <div
+      class="
+        mb-6
+        rounded-md
+        border border-red-200
+        bg-red-50
+        px-4 py-3
+        text-sm text-red-700
+      "
+    >
+      {{ error() }}
+    </div>
+  }
+
+  @if (isLoading()) {
+
+    <div class="py-12 text-center text-gray-500">
+      Betöltés...
+    </div>
+
+  }
+  @else {
+
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      class="
+        max-w-4xl
+        space-y-6
+      "
+    >
+
+      <div>
+        <label
+          for="name"
+          class="
+            mb-1
+            block
+            text-sm font-medium
+            text-gray-700
+          "
+        >
+          Név
+        </label>
+
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          class="
+            w-full
+            rounded-md
+            border border-gray-300
+            px-3 py-2
+          "
+        />
+      </div>
+
+      <div>
+        <label
+          for="slug"
+          class="
+            mb-1
+            block
+            text-sm font-medium
+            text-gray-700
+          "
+        >
+          Slug
+        </label>
+
+        <input
+          id="slug"
+          type="text"
+          formControlName="slug"
+          class="
+            w-full
+            rounded-md
+            border border-gray-300
+            px-3 py-2
+          "
+        />
+
+        <p class="mt-1 text-xs text-gray-500">
+          /szolgaltatasok/{{ form.controls.slug.value }}
+        </p>
+      </div>
+
+      <div>
+        <label
+          for="shortDescription"
+          class="
+            mb-1
+            block
+            text-sm font-medium
+            text-gray-700
+          "
+        >
+          Rövid leírás
+        </label>
+
+
+      <editor
+        formControlName="shortDescription"
+        [apiKey]="tinyMceApiKey"
+        [init]="shortSummaryEditorConfig"
+      />
+      </div>
+
+      <div>
+        <label
+          for="description"
+          class="
+            mb-1
+            block
+            text-sm font-medium
+            text-gray-700
+          "
+        >
+          Leírás
+        </label>
+
+
+      <editor
+        formControlName="description"
+        [apiKey]="tinyMceApiKey"
+        [init]="contentEditorConfig"
+      />
+      </div>
+
+      <div>
+        <label
+          for="price"
+          class="
+            mb-1
+            block
+            text-sm font-medium
+            text-gray-700
+          "
+        >
+          Ár
+        </label>
+
+        <input
+          id="price"
+          type="number"
+          min="1"
+          formControlName="price"
+          class="
+            w-full
+            rounded-md
+            border border-gray-300
+            px-3 py-2
+          "
+        />
+      </div>
+
+            <div>
+        <label
+          for="orderNumber"
+          class="
+            mb-1
+            block
+            text-sm font-medium
+            text-gray-700
+          "
+        >
+        Megjelenési Sorrend
+        </label>
+
+        <input
+          id="orderNumber"
+          type="number"
+          min="1"
+          formControlName="orderNumber"
+          class="
+            w-full
+            rounded-md
+            border border-gray-300
+            px-3 py-2
+          "
+        />
+      </div>
+
+
+      <div>
+        <label
+          for="serviceStatusCode"
+          class="
+            mb-1
+            block
+            text-sm font-medium
+            text-gray-700
+          "
+        >
+          Állapot
+        </label>
+
+        <select
+          id="serviceStatusCode"
+          formControlName="serviceStatusCode"
+          class="
+            w-full
+            rounded-md
+            border border-gray-300
+            px-3 py-2
+          "
+        >
+          <option [ngValue]="1">
+            Aktív
+          </option>
+
+          <option [ngValue]="0">
+            Inaktív
+          </option>
+        </select>
+      </div>
+
+      <div class="flex gap-3">
+
+        <button
+          type="button"
+          (click)="router.navigate(['/admin/szolgaltatasok'])"
+          class="
+            rounded-md
+            border border-gray-300
+            px-4 py-2
+            text-sm font-medium
+            text-gray-700
+            hover:bg-gray-50
+          "
+        >
+          Mégse
+        </button>
+
+        <button
+          type="submit"
+          [disabled]="
+            form.invalid ||
+            isSaving()
+          "
+          class="
+            rounded-md
+            bg-gray-900
+            px-4 py-2
+            text-sm font-medium
+            text-white
+            hover:bg-gray-700
+            disabled:cursor-not-allowed
+            disabled:opacity-50
+          "
+        >
+          @if (isSaving()) {
+            Mentés...
+          }
+          @else if (isEditMode()) {
+            Módosítások mentése
+          }
+          @else {
+            Szolgáltatás létrehozása
+          }
+        </button>
+
+      </div>
+
+    </form>
+
+  }
+
+</section>

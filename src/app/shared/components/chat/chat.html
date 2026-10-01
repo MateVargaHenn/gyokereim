@@ -1,0 +1,155 @@
+@if(displayChat()) {
+<div
+  class="chat-container fixed bottom-1/10 right-1
+         flex flex-col
+         w-75 h-100
+         bg-default
+         z-100
+         border border-gray-300 rounded shadow-lg
+         overflow-hidden"
+>
+  <div
+    class="chat-header shrink-0 flex items-center justify-between bg-gray-200 p-2"
+  >
+    <span>Chatbot</span>
+
+    <button
+      type="button"
+      class="close-button bg-gray-300 text-white cursor-pointer px-2 py-1 rounded"
+      (click)="toggleChat()"
+    >
+      _
+    </button>
+  </div>
+
+<div class="chat-body flex-1 min-h-0 overflow-y-auto p-2 scroll-auto">
+  <div class="chat-message bg-gray-100 p-2 rounded mb-2">
+    <p>Üdvözlöm! Bánfi Zoltán Csaba vagyok. Itt egy chatbot válaszol a kérdéseire. Az adatvédelmi tájékoztatót <a class="link" routerLink="/adatvedelmi-tajekoztato">Itt olvashatja el.</a></p>
+    <p>A Chatbot verziója: {{version()}}</p>
+  </div>
+
+  @if (isLoading()) {
+    <div class="chat-message bg-gray-100 p-2 rounded mb-2">
+      <p>Gondolkodom...</p>
+    </div>
+  }
+
+@for (response of responses(); track response) {
+  <div class="chat-message bg-blue-100 p-2 rounded mb-2">
+    <p>{{ response.myQuestion }}</p>
+  </div>
+
+  <div class="chat-message bg-default-light p-2 rounded mb-2">
+    <p class="whitespace-pre-line">
+      {{ response.chatAnswer.answer }}
+    </p>
+
+    @if (response.chatAnswer.link) {
+      @if (response.chatAnswer.link == "/kapcsolat") {
+        <p>
+          <b>
+            Tovább a
+            <a
+              class="link"
+              [href]="response.chatAnswer.link"
+              target="_blank">
+              kapcsolat
+            </a>
+            oldalra
+          </b>
+        </p>
+      }
+      @if (response.chatAnswer.link.startsWith("/megrendeles")) {
+        <p>
+          <b>
+            Tovább a
+            <a
+              class="link"
+              [href]="response.chatAnswer.link"
+              target="_blank">
+              szolgáltatás
+            </a>
+            oldalára
+          </b>
+        </p>
+      }
+    }
+  </div>
+}
+
+  @if (errorMessage(); as error) {
+    <div 
+    class="chat-message bg-red-100 p-2 rounded mb-2">
+      <p>{{ error }}</p>
+    </div>
+  }
+</div>
+
+  <div
+    class="chat-input-container shrink-0 flex items-center border-t border-gray-300 bg-white"
+  >
+    <div
+      #messageInput
+      class="chat-input flex-1 min-h-20 max-w-3/4 p-2 outline-none"
+      contenteditable="true"
+      (keydown)="keypress($event, messageInput);"
+    ></div>
+
+    <button
+      type="button"
+      class="p-2 bg-default-light cursor-pointer"
+      (click)="send(messageInput);"
+    >
+      Küldés
+    </button>
+  </div>
+</div>
+}
+
+@if(!displayChat()) {
+<div class="fixed right-5 bottom-5 z-50 flex items-end gap-3">
+  <div
+    class="
+      hidden sm:block
+      rounded-full
+      bg-white
+      px-4 py-2
+      text-sm
+      text-stone-700
+      shadow-lg
+      border border-stone-200
+      animate-pulse
+    "
+  >
+    Kérdése van? Segítek!
+  </div>
+
+  <button
+    type="button"
+    class="
+      relative
+      flex h-16 w-16 items-center justify-center
+      rounded-full
+      bg-[#2f2924]
+      text-white
+      shadow-2xl
+      cursor-pointer
+      transition
+      hover:scale-105
+      hover:bg-[#3a271b]
+    "
+    (click)="toggleChat()"
+  >
+    <!-- pulzáló kör -->
+
+  @if (highlightChat()) {
+    <span class="absolute inset-0 rounded-full bg-[#2f2924]/30 animate-ping"></span>
+  }
+
+    <!-- ikon -->
+    <span class="relative z-10">
+      💬
+    </span>
+  </button>
+</div>
+}

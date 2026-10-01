@@ -10,24 +10,16 @@
     </h1>
 
     <p class="mt-4 text-lg text-slate-400 leading-relaxed">
-      Úgy tűnik, rossz útvonalra tévedtél. Térj vissza a MotivPlan főoldalára.
+      Úgy tűnik, rossz oldalra tévedtél. Térjen vissza a Gyökereim főoldalára!
     </p>
 
     <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-      <a
-        routerLink="/"
-        class="px-6 py-3 rounded-xl
-               transition text-white font-medium shadow-lg shadow-emerald-500/20">
-        Vissza a főoldalra
-      </a>
 
-      <button
-        type="button"
-        (click)="goBack()"
-        class="px-6 py-3 rounded-xl border border-slate-700
-               hover:border-slate-500 hover:bg-slate-800 transition">
-        Előző oldal
-      </button>
+
+      <a routerLink="/kezdolap"
+        class="px-6 py-3 rounded-xl border border-slate-700 transition cursor-pointer">
+        Vissza a főoldalra
+    </a>
     </div>
 
   </div>

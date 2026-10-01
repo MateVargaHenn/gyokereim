@@ -1,0 +1,106 @@
+<form (submit)="onSubmit()" [formGroup]="orderFormGroup" class="flex flex-col w-full max-w-md mx-auto p-4 my-2 rounded shadow-lg">
+            @if (isLoading()) {
+            <p>Betöltés...</p>
+        }
+        @else if (error()) {
+            <p>{{ error() }}</p>
+        }
+        @else if (!service$()) {
+            <p>Nincs megjeleníthető megrendelés.</p>
+        }
+        @else {
+    <p class="mb-4">A <span class="font-bold">{{ service$()?.name }}</span> szolgáltatás megrendeléséhez, kérem, adja meg az alábbi adatokat:</p>
+    <div class="mb-4 flex flex-col w-full">
+        <label for="customerName">Név:</label>
+        <input class="bg-white" type="text" id="customerName" name="customerName" formControlName="customerName" required>
+
+
+    @if (orderFormGroup.controls.customerName.touched) {
+        @if (orderFormGroup.controls.customerName.hasError('required')) {
+            <span class="text-red-600 text-sm mt-1">
+                A név megadása kötelező.
+            </span>
+        }
+
+        @if (orderFormGroup.controls.customerName.hasError('minlength')) {
+            <span class="text-red-600 text-sm mt-1">
+                A név legalább 2 karakter legyen.
+            </span>
+        }
+    }
+    </div>
+    <div class="mb-4 flex flex-col w-full">
+        <label for="email">Email:</label>
+        <input class="bg-white" type="email" id="email" name="email" formControlName="email" required>
+            @if (orderFormGroup.controls.email.touched) {
+        @if (orderFormGroup.controls.email.hasError('required')) {
+            <span class="text-red-600 text-sm mt-1">
+                Az email cím megadása kötelező.
+            </span>
+        }
+
+        @if (orderFormGroup.controls.email.hasError('email')) {
+            <span class="text-red-600 text-sm mt-1">
+                Érvénytelen email cím.
+            </span>
+        }
+    }
+    </div>
+    <div class="mb-4 flex flex-col w-full">
+        <label for="phoneNumber">Telefonszám:</label>
+        <input class="bg-white" type="tel" id="phoneNumber" name="phoneNumber" formControlName="phoneNumber" required>
+        @if (orderFormGroup.controls.phoneNumber.touched) {
+            @if (orderFormGroup.controls.phoneNumber.hasError('required')) {
+                <span class="text-red-600 text-sm mt-1">
+                    A telefonszám megadása kötelező.
+                </span>
+            }
+
+            @if (orderFormGroup.controls.phoneNumber.hasError('pattern')) {
+                <span class="text-red-600 text-sm mt-1">
+                    Érvénytelen telefonszám.
+                </span>
+            }
+        }
+    </div>
+    <div class="mb-4 flex flex-col w-full">
+        <label for="message">Üzenet (opcionális):</label>
+        <textarea class="bg-white" id="message" name="message" formControlName="message" rows="4"></textarea>
+    </div>
+    <div class="mb-4 flex flex-col w-full">
+        <label>
+            <input
+                type="checkbox"
+                formControlName="acceptTerms">
+
+            Elfogadom az
+            <a
+                class="underline"
+                routerLink="/altalanos-szerzodesi-feltetelek"
+                target="_blank">
+                Általános Szerződési Feltételeket
+            </a>
+        </label>
+
+        @if (
+            orderFormGroup.controls.acceptTerms.touched &&
+            orderFormGroup.controls.acceptTerms.hasError('required')
+        ) {
+            <span class="text-red-600 text-sm mt-1">
+                A megrendeléshez el kell fogadnia az ÁSZF-et.
+            </span>
+        }
+    </div>
+    @if (submitted()) {
+        <p class="text-green-600 text-sm mt-1">
+            A megrendelés sikeresen elküldve!
+        </p>
+    }
+    @if (serverError()) {
+        <p class="text-red-600 text-sm mt-1">
+            Hiba történt a megrendelés elküldése során. Kérlek, próbáld újra később.
+        </p>
+    }
+    <button type="submit" class="mt-auto inline-flex justify-center items-center rounded-lg bg-stone-900 px-4 py-2 text-white font-medium hover:bg-stone-700 transition cursor-pointer">Megrendelem</button>
+        }
+</form>

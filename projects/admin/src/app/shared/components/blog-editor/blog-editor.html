@@ -1,0 +1,39 @@
+<div class="mb-3 flex gap-2">
+  @if (!htmlMode) {
+    <button
+      type="button"
+      class="btn"
+      (click)="openHtmlView()">
+      HTML-kód
+    </button>
+  } @else {
+    <button
+      type="button"
+      class="btn"
+      (click)="applyHtml()">
+      HTML alkalmazása
+    </button>
+
+    <button
+      type="button"
+      class="btn"
+      (click)="cancelHtmlView()">
+      Mégse
+    </button>
+  }
+</div>
+
+<div [style.display]="htmlMode ? 'none' : 'block'">
+  <quill-editor
+    [modules]="editorModules"
+    (onEditorCreated)="onEditorCreated($event)">
+  </quill-editor>
+</div>
+
+@if (htmlMode) {
+  <textarea
+    [(ngModel)]="htmlSource"
+    spellcheck="false"
+    class="html-editor">
+  </textarea>
+}

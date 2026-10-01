@@ -1,17 +1,306 @@
-<div class="container w-full h-screen flex items-center justify-center">
-    <div class="box">
-        <div class="anchor">
-            <h2 class="title">Kik voltak ön előtt?</h2>
-        </div>
-        <div class="anchor">
-            <h2 class="title">Szeretné felfedezni a gyökereit?</h2>
-        </div>
-        <div class="anchor">
-            <h2 class="title">A neve mögött nemzedékek élete rejtőzik. Nevek, sorsok, döntések, amelyek nélkül ön sem lenne itt. Felkutatom őket.</h2>
-        </div>
-        <div class="anchor">
-            <h2 class="title">Szeretné felfedezni a gyökereit?</h2>
-        </div>
+<section class="max-w-5xl mx-auto px-6 py-12">
+    <h1 class="text-3xl font-semibold text-center">
+        Családfakutatás – ismerje meg családja történetét
+    </h1>
 
-    </div>
+    <p class="mt-4 text-center">
+        Segítek felkutatni felmenőit, családja múltját és az
+        anyakönyvekben rejlő történeteket.
+    </p>
+</section>
+
+<section
+  class="
+    content-section
+    flex flex-col lg:flex-row
+    items-center justify-center
+    border-b border-[#f2dfc5]
+    w-full
+    px-4 md:px-8 lg:px-0
+    py-8
+  "
+>
+<!-- Rólam -->
+<div
+  class="
+    about-section
+    flex flex-col sm:flex-row
+    items-center
+    justify-start
+    w-full lg:w-[40%]
+    mx-0 lg:mx-10 xl:mx-20
+    my-4 lg:my-8
+    pb-8 lg:pb-0
+    border-b lg:border-b-0
+    lg:border-r
+    border-[#f2dfc5]
+    lg:pr-8
+  "
+>
+  @if (aboutImageUrl(); as imageUrl) {
+    <img
+      [src]="imageUrl"
+      width="248"
+      height="248"
+      alt="Rólam"
+      class="
+        w-44 h-44
+        sm:w-40 sm:h-40
+        md:w-52 md:h-52
+        lg:w-[248px] lg:h-[248px]
+        shrink-0
+        object-cover
+        rounded-3xl
+        mb-6 sm:mb-0
+        sm:mr-8
+      "
+    >
+  }
+
+  <div class="about-text text-center sm:text-left">
+    <p class="text-[12px] mb-4 uppercase">
+      Rólam
+    </p>
+
+    @if (aboutShortDescription(); as shortDescription) {
+      <div
+        class="text-sm mb-8"
+        [innerHTML]="shortDescription">
+      </div>
+    }
+
+    <a
+      routerLink="/rolam"
+      class="inline-block border p-3 rounded-[10px] cursor-pointer"
+    >
+      Többet rólam &rarr;
+    </a>
+  </div>
 </div>
+
+  <div
+    class="
+      services-section
+      flex flex-col
+      items-start justify-center
+      w-full lg:w-[40%]
+      mx-0 lg:mx-10 xl:mx-20
+      my-4 lg:my-8
+      p-2
+      gap-6
+    "
+  >
+
+    <div class="flex flex-row items-start sm:items-center gap-4 w-full">
+      <div
+        class="
+          w-14 h-14 sm:w-16 sm:h-16
+          shrink-0
+          rounded-full
+          overflow-hidden
+          bg-[#f2dfc5]
+          flex items-center justify-center
+        "
+      >
+        <img
+          src="icon/history.svg"
+          alt="History logo"
+          width="32"
+          height="32"
+        >
+      </div>
+
+      <div>
+        <h3 class="text-base sm:text-lg font-semibold">
+          Történetközpontú megközelítés
+        </h3>
+
+        <p class="text-sm">
+          A közeli gyökerei lesznek a kiindulópontok a családfakutatás során.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-row items-start sm:items-center gap-4 w-full">
+      <div
+        class="
+          w-14 h-14 sm:w-16 sm:h-16
+          shrink-0
+          rounded-full
+          overflow-hidden
+          bg-[#f2dfc5]
+          flex items-center justify-center
+        "
+      >
+        <img
+          src="icon/eye.svg"
+          alt="Eye logo"
+          width="44"
+          height="32"
+        >
+      </div>
+
+      <div>
+        <h3 class="text-base sm:text-lg font-semibold">
+          Empatikus kísérés
+        </h3>
+
+        <p class="text-sm">
+          Figyelemmel kísérem önt a családfakutatás során.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-row items-start sm:items-center gap-4 w-full">
+      <div
+        class="
+          w-14 h-14 sm:w-16 sm:h-16
+          shrink-0
+          rounded-full
+          overflow-hidden
+          bg-[#f2dfc5]
+        "
+      >
+        <img
+          src="icon/familysearch.svg"
+          alt="FamilySearch logo"
+          class="w-full h-full object-cover"
+        >
+      </div>
+
+      <div>
+        <h3 class="text-base sm:text-lg font-semibold">
+          Biztos források
+        </h3>
+
+        <p class="text-sm">
+          Többéves tapasztalattal rendelkezem anyakönyvi- és
+          másodlagos források felkutatása terén.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="
+    w-full
+    border-b border-[#f2dfc5]
+    px-4 md:px-8
+    py-10
+">
+  <div class="max-w-6xl mx-auto px-2 py-4">
+    
+    <h2 class="text-2xl font-semibold mb-10">
+      Szolgáltatásaim
+    </h2>
+@if (services$().length === 0) {
+      <p class="text-[#6b5845]">
+        Jelenleg nincs megjeleníthető szolgáltatás.
+      </p>
+    }
+
+    @else {
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        @for (service of services$(); track service.id) {
+          <div
+            class="
+              flex flex-col h-full
+    rounded-2xl
+    border border-stone-200
+    bg-white/70
+    shadow-sm
+    p-6
+    transition-all duration-300
+    hover:-translate-y-1
+    hover:shadow-lg
+            "
+          >
+            <h3 class="text-xl font-semibold mb-3 text-stone-900">
+              {{ service.name }}
+            </h3>
+
+            <div class="text-stone-700 leading-relaxed mb-4" [innerHTML]="service.shortDescription">
+            </div>
+          <div class="mt-4 mb-5">
+            <p class="text-sm text-stone-500">Csomag ára</p>
+
+            <p class="text-2xl font-semibold text-stone-900">
+              {{ service.price | number:'1.0-0':'hu-HU' }}
+              <span class="text-base font-normal">Ft</span>
+            </p>
+          </div>
+            <a
+              [routerLink]="['/szolgaltatasaim', service.slug]"
+              class="
+                mt-auto inline-flex justify-center items-center rounded-lg bg-stone-900 px-4 py-2 text-white font-medium hover:bg-stone-700 transition
+              "
+            >
+              Bővebben
+            </a>
+          </div>
+        }
+
+      </div>
+    }
+  </div>
+</section>
+<section
+  class="
+    w-full
+    border-b border-[#f2dfc5]
+    px-4 md:px-8
+    py-10
+  "
+>
+  <div class="max-w-6xl mx-auto px-2 py-4">
+
+    <h2 class="text-2xl font-semibold mb-10">
+      Legfrissebb bejegyzések
+    </h2>
+
+    @if (posts$().length === 0) {
+      <p class="text-[#6b5845]">
+        Jelenleg nincs megjeleníthető bejegyzés.
+      </p>
+    }
+    @else {
+      <div class="space-y-8">
+
+        @for (post of posts$(); track post.id) {
+          <article
+            class="
+              pb-8 border-b border-[#d8c5aa] last:border-b-0
+            "
+          >
+            <h3 class="text-lg font-semibold mb-2">
+              {{ post.title }}
+            </h3>
+
+            <div class="text-sm text-[#6b5845] mb-4" [innerHTML]="post.summary">
+            </div>
+
+            <a
+              [routerLink]="['/blog', post.slug]"
+              class="
+                inline-block
+                border border-[#6b5845]
+                px-4 py-2
+                rounded-lg
+                hover:bg-[#6b5845]
+                hover:text-white
+                transition
+              "
+            >
+              Tovább a bejegyzéshez →
+            </a>
+          </article>
+        }
+        <div>
+        </div>
+      </div>
+    }
+
+  </div>
+</section>

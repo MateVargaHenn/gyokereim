@@ -1,0 +1,133 @@
+<section class="max-w-4xl mx-auto px-4 py-12">
+
+  <header class="mb-12">
+    <h1 class="text-3xl font-bold mb-3">
+      Blog
+    </h1>
+
+    <p class="text-[#6b5845]">
+      Történetek, kutatások és érdekességek a családfakutatás világából.
+    </p>
+  </header>
+
+  @if (!posts$() || posts$()?.totalCount === 0) {
+    <p class="text-[#6b5845]">
+      Jelenleg nincs megjeleníthető bejegyzés.
+    </p>
+  }
+  @else {
+    <div class="space-y-10">
+  
+      @for (post of posts$()?.items ?? []; track post.id) {
+        <article class="border-b border-[#b9a78f] pb-8">
+
+          <h2 class="text-2xl font-semibold mb-2">
+            <a
+              [routerLink]="['/blog', post.slug]"
+              class="hover:text-[#6b5845] transition-colors"
+            >
+              {{ post.title }}
+            </a>
+          </h2>
+
+          @if (post.publishedAt) {
+            <time class="block text-sm text-[#806f5d] mb-4">
+              {{ post.publishedAt | date:'yyyy. MM. dd. hh:mm:ss' }}
+            </time>
+          }
+
+          <div class="leading-7 text-[#3f382f] mb-5" [innerHTML]="post.summary"></div>
+
+          <div class="flex items-center gap-6">
+
+
+
+            <a
+              [routerLink]="['/blog', post.slug]"
+              class="
+                text-sm font-medium
+                text-[#4f4032]
+                hover:underline
+                underline-offset-4
+              "
+            >
+              Tovább olvasom →
+            </a>
+
+          </div>
+
+        </article>
+      }
+@if (posts$(); as posts) {
+
+  @if (posts.totalPages > 1) {
+    <nav
+      class="mt-12 flex items-center justify-center gap-2"
+      aria-label="Blog oldalak"
+    >
+
+      @if (posts.page > 1) {
+        <a
+          routerLink="/blog"
+          [queryParams]="{ page: posts.page - 1 }"
+          class="
+            px-4 py-2
+            border border-[#b9a78f]
+            rounded
+            text-sm
+            hover:bg-[#f3eee7]
+            transition-colors
+          "
+        >
+          ← Előző
+        </a>
+      }
+
+      @for (
+        pageNumber of getPageNumbers(posts.totalPages);
+        track pageNumber
+      ) {
+        <a
+          routerLink="/blog"
+          [queryParams]="{ page: pageNumber }"
+          class="
+            min-w-10 h-10
+            inline-flex items-center justify-center
+            border border-[#b9a78f]
+            rounded
+            text-sm
+            transition-colors
+          "
+          [class.bg-[#4f4032]]="pageNumber === posts.page"
+          [class.text-white]="pageNumber === posts.page"
+          [class.hover:bg-[#f3eee7]]="pageNumber !== posts.page"
+        >
+          {{ pageNumber }}
+        </a>
+      }
+
+      @if (posts.page < posts.totalPages) {
+        <a
+          routerLink="/blog"
+          [queryParams]="{ page: posts.page + 1 }"
+          class="
+            px-4 py-2
+            border border-[#b9a78f]
+            rounded
+            text-sm
+            hover:bg-[#f3eee7]
+            transition-colors
+          "
+        >
+          Következő →
+        </a>
+      }
+
+    </nav>
+  }
+
+}
+    </div>
+  }
+
+</section>

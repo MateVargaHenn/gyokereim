@@ -1,0 +1,42 @@
+<div class="tracking flex flex-col gap-4">
+    <div class="align-middle justify-center flex flex-col">
+        <form (submit)="onSubmit()" [formGroup]="trackingForm" class="flex flex-col w-full max-w-md mx-auto p-4 my-2 rounded shadow-lg">
+            <div class="mb-4 flex flex-col w-full">
+                <label for="track-number" class="text-sm font-medium text-gray-700">Nyomkövetési szám</label>
+                <input formControlName="tracknumber" #trackNumber type="text" id="track-number" name="track-number" class="ml-2 rounded-md border-gray-700 shadow-sm focus:bg-default focus:bg-default-light sm:text-sm" placeholder="Kérlek, add meg a nyomkövetési számot">
+            </div>
+            <div class="mb-4 flex flex-col w-full">
+                <label for="email" class="text-sm font-medium text-gray-700">Email cím</label>
+                <input formControlName="email" type="email" id="email" name="email" class="ml-2 rounded-md border-gray-700 shadow-sm focus:bg-default focus:bg-default-light sm:text-sm" placeholder="Kérlek, add meg az email címed">
+            </div>
+            <button type="submit" class="pill text-center cursor-pointer">Keresés</button>
+        </form>
+        @if (isLoading()) {
+            <div class="flex flex-col w-full max-w-md mx-auto p-4 my-2 rounded shadow-lg">
+                <div class="mb-4 flex flex-col w-full">
+                    <span class="font-bold">Keresés folyamatban...</span>
+                </div>
+            </div>
+        }
+        @else if(order$(); as order) {
+        <div class="flex flex-col w-full max-w-md mx-auto p-4 my-2 rounded shadow-lg">
+            <div class="mb-4">
+                <span class="font-bold">Szolgáltatás neve:</span>
+                <span class="ml-2">{{ order.serviceName }}</span>
+            </div>
+            <div class="mb-4">
+                <span class="font-bold">Nyomkövetés azonosítója:</span>
+                <span class="ml-2">{{ order.trackingNumber }}</span>
+            </div>
+            <div class="mb-4">
+                <span class="font-bold">Megrendelés e-mail címe:</span>
+                <span class="ml-2">{{ order.email }}</span>
+            </div>
+            <div class="mb-4">
+                <span class="font-bold">Rendelés állapota:</span>
+                <span class="ml-2">{{ order.status | OrderStatus }}</span>
+            </div>
+        </div>
+        }
+    </div>
+</div>

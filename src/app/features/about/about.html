@@ -1,0 +1,64 @@
+<section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+
+  <div class="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-10 lg:gap-16 items-start">
+
+    <!-- Bal oldal -->
+    <aside class="lg:sticky lg:top-24">
+      <p class="text-sm uppercase tracking-[0.2em] text-stone-500 mb-3">
+        Rólam
+      </p>
+      @if (imageUrl()) {
+        <div class="w-full h-[320px] rounded-3xl overflow-hidden mb-6">
+          <img
+            [src]="imageUrl()"
+            alt="Rólam"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      }
+      <h1 class="text-3xl lg:text-4xl font-semibold text-stone-900 leading-tight">
+        Bánfi Zoltán Csaba
+      </h1>
+
+      <p class="mt-4 text-lg leading-relaxed text-stone-600">
+        Családfakutató, történész és üzleti intelligencia elemző.
+      </p>
+
+      <div class="mt-8 border-l-2 border-stone-300 pl-5">
+        <p class="text-sm leading-relaxed text-stone-600">
+          A múlt történeteinek feltárása számomra nemcsak kutatás,
+          hanem annak megértése is, hogyan formálták őseink a jelent.
+        </p>
+      </div>
+    </aside>
+
+    <!-- Jobb oldal -->
+    <article
+      class="
+        rounded-3xl
+        border border-stone-200
+        bg-white/60
+        backdrop-blur-sm
+        shadow-sm
+        p-6 sm:p-8 lg:p-10
+      "
+    >
+      <div class="space-y-6 text-base lg:text-lg leading-8 text-stone-700">
+
+        @if (isLoading()) {
+          <p class="text-center text-stone-600">Betöltés...</p>
+        }
+        @else if (error()) {
+          <p class="text-center text-red-600">{{ error() }}</p>
+        }
+        @else if (!webSettings$()) {
+          <p class="text-center text-stone-600">Nincs megjeleníthető Szöveg.</p>
+        }
+        @else {
+          <div [innerHTML]="webSettings$()?.value" ></div>
+        }
+      </div>
+    </article>
+
+  </div>
+</section>

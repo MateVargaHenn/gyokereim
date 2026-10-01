@@ -1,0 +1,273 @@
+<section class="w-full px-4 sm:px-6 py-10 md:py-16">
+  <div class="w-full max-w-2xl mx-auto">
+
+    <!-- Fejléc -->
+    <div class="mb-10">
+      <p class="text-xs uppercase tracking-widest mb-3">
+        Kapcsolat
+      </p>
+
+      <h1 class="text-3xl md:text-4xl mb-4">
+        Írjon nekem!
+      </h1>
+
+      <p class="text-sm leading-6 max-w-xl">
+        Amennyiben kérdése van a családfakutatással vagy valamelyik
+        szolgáltatásommal kapcsolatban, küldjön üzenetet az alábbi űrlapon.
+      </p>
+    </div>
+
+    <form (submit)="onSubmit()" [formGroup]="contactFormGroup" class="flex flex-col gap-6">
+
+      <!-- Név -->
+      <div>
+        <label
+          for="name"
+          class="block text-sm font-medium mb-2"
+        >
+          Név
+          <span class="text-red-700">*</span>
+        </label>
+
+        <input
+          type="text"
+          id="name"
+          name="name"
+          formControlName="name"
+          autocomplete="name"
+          class="
+            w-full
+            px-4 py-3
+            rounded-lg
+            border border-[#d8c5aa]
+            bg-[#fffaf2]
+            outline-none
+            transition
+            focus:border-[#6b5845]
+            focus:ring-1
+            focus:ring-[#6b5845]
+          "
+        >
+        @if (contactFormGroup.controls.name.touched) {
+            @if (contactFormGroup.controls.name.hasError('required')) {
+                <span class="text-red-600 text-sm mt-1">
+                    A név megadása kötelező.
+                </span>
+            }
+        }
+      </div>
+
+      <!-- E-mail -->
+      <div>
+        <label
+          for="email"
+          class="block text-sm font-medium mb-2"
+        >
+          E-mail
+          <span class="text-red-700">*</span>
+        </label>
+
+        <input
+          type="email"
+          id="email"
+          name="email"
+          formControlName="email"
+          autocomplete="email"
+          class="
+            w-full
+            px-4 py-3
+            rounded-lg
+            border border-[#d8c5aa]
+            bg-[#fffaf2]
+            outline-none
+            transition
+            focus:border-[#6b5845]
+            focus:ring-1
+            focus:ring-[#6b5845]
+          "
+        >
+        @if (contactFormGroup.controls.email.touched) {
+            @if (contactFormGroup.controls.email.hasError('required')) {
+                <span class="text-red-600 text-sm mt-1">
+                    Az e-mail cím megadása kötelező.
+                </span>
+            }
+
+            @if (contactFormGroup.controls.email.hasError('email')) {
+                <span class="text-red-600 text-sm mt-1">
+                    Érvénytelen e-mail cím.
+                </span>
+            }
+        }
+      </div>
+
+      <!-- Telefonszám -->
+      <div>
+        <label
+          for="phoneNumber"
+          class="block text-sm font-medium mb-2"
+        >
+          Telefonszám
+        </label>
+
+        <input
+          type="tel"
+          id="phoneNumber"
+          name="phoneNumber"
+          formControlName="phoneNumber"
+          autocomplete="tel"
+          class="
+            w-full
+            px-4 py-3
+            rounded-lg
+            border border-[#d8c5aa]
+            bg-[#fffaf2]
+            outline-none
+            transition
+            focus:border-[#6b5845]
+            focus:ring-1
+            focus:ring-[#6b5845]
+          "
+        >
+        @if (contactFormGroup.controls.phoneNumber.touched) {
+            @if (contactFormGroup.controls.phoneNumber.hasError('required')) {
+                <span class="text-red-600 text-sm mt-1">
+                    A telefonszám megadása kötelező.
+                </span>
+            }
+
+            @if (contactFormGroup.controls.phoneNumber.hasError('pattern')) {
+                <span class="text-red-600 text-sm mt-1">
+                    Érvénytelen telefonszám.
+                </span>
+            }
+        }
+      </div>
+
+      <!-- Üzenet -->
+      <div>
+        <label
+          for="message"
+          class="block text-sm font-medium mb-2"
+        >
+          Üzenet
+        </label>
+
+        <textarea
+          id="message"
+          formControlName="message"
+          rows="6"
+          class="
+            w-full
+            px-4 py-3
+            rounded-lg
+            border border-[#d8c5aa]
+            bg-[#fffaf2]
+            outline-none
+            resize-y
+            transition
+            focus:border-[#6b5845]
+            focus:ring-1
+            focus:ring-[#6b5845]
+          "
+        ></textarea>
+        @if (contactFormGroup.controls.message.touched) {
+            @if (contactFormGroup.controls.message.hasError('required')) {
+                <span class="text-red-600 text-sm mt-1">
+                    Az üzenet megadása kötelező.
+                </span>
+            }
+        }
+      </div>
+
+      <!-- Csatolmány -->
+      <div>
+        <label
+          for="attachment"
+          class="block text-sm font-medium mb-2"
+        >
+          Csatolmány
+        </label>
+
+        <input
+          type="file"
+          id="attachment"
+          name="attachment"
+          formControlName="attachment"
+          accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.txt,.xls,.xlsx,.csv,.ppt,.pptx"
+          (change)="onFileSelected($event)"
+          class="
+            block
+            w-full
+            text-sm
+            border border-[#d8c5aa]
+            rounded-lg
+            bg-[#fffaf2]
+
+            file:mr-4
+            file:py-3
+            file:px-4
+            file:border-0
+            file:border-r
+            file:border-[#d8c5aa]
+            file:bg-[#f2dfc5]
+            file:cursor-pointer
+          "
+        >
+        
+        @if (contactFormGroup.controls.attachment.touched) {
+            @if (contactFormGroup.controls.attachment.hasError('required')) {
+                <span class="text-red-600 text-sm mt-1">
+                    A csatolmány megadása kötelező.
+                </span>
+            }
+        }
+      </div>
+
+      <!-- Captcha -->
+      <div>
+        <label
+          for="captcha"
+          class="block text-sm font-medium mb-2"
+        >
+          Captcha
+          <span class="text-red-700">*</span>
+        </label>
+
+        <div id="turnstile-container"></div>
+        @if (contactFormGroup.controls.captchaToken.touched) {
+            @if (contactFormGroup.controls.captchaToken.hasError('required')) {
+                <span class="text-red-600 text-sm mt-1">
+                    A captcha megadása kötelező.
+                </span>
+            }
+        }
+      </div>
+
+    @if (submitted()) {
+        <p class="text-green-600 text-sm mt-1">
+            Az üzenet sikeresen elküldve!
+        </p>
+    }
+    @if (serverError()) {
+        <p class="text-red-600 text-sm mt-1">
+            Hiba történt az üzenet elküldése során. Kérlek, próbáld újra később.
+        </p>
+    }
+      <div class="pt-2">
+        <button
+          type="submit"
+          class="pill"
+        >
+          Küldés
+        </button>
+      </div>
+
+      <p class="text-xs opacity-70">
+        A *-gal jelölt mezők kitöltése kötelező.
+      </p>
+
+    </form>
+
+  </div>
+</section>
