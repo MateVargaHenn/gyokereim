@@ -13,11 +13,6 @@ import { AdminOrderDetailsDto } from '../../shared/data-transfer-objects/admin-o
 })
 export class ServicesService extends Api{
 
-  private readonly http = inject(HttpClient);
-
-  private readonly baseUrl =
-    `${environment.apiUrl}/services`;
-
     createService(
   dto: CreateServiceDto
 ): Observable<void> {

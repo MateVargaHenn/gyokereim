@@ -1,5 +1,9 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, LOCALE_ID } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import {
+  provideRouter,
+  withInMemoryScrolling
+} from '@angular/router';
+
 import { registerLocaleData } from '@angular/common';
 import localeHu from '@angular/common/locales/hu';
 
@@ -11,7 +15,9 @@ registerLocaleData(localeHu);
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
+    provideRouter(routes, withInMemoryScrolling({
+    anchorScrolling: 'enabled'
+  })),
     provideClientHydration(withEventReplay()),
     {
       provide: LOCALE_ID,

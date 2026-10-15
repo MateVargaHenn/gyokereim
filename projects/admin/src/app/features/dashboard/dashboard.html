@@ -20,7 +20,7 @@
         </p>
 
         <p class="mt-3 text-3xl font-semibold text-gray-900">
-          {{ newOrdersCount() ?? 0}}
+          {{ ordersLoading() ? '…' : ordersError() ? '—' : newOrdersCount() }}
         </p>
 
         <a
@@ -37,7 +37,7 @@
         </p>
 
         <p class="mt-3 text-3xl font-semibold text-gray-900">
-          5
+          {{ ordersLoading() ? '…' : ordersError() ? '—' : inProgressOrdersCount() }}
         </p>
 
         <a
@@ -54,7 +54,7 @@
         </p>
 
         <p class="mt-3 text-3xl font-semibold text-gray-900">
-          2
+          {{ postsLoading() ? '…' : postsError() ? '—' : draftPostsCount() }}
         </p>
 
         <a
@@ -71,7 +71,7 @@
         </p>
 
         <p class="mt-3 text-3xl font-semibold text-gray-900">
-          {{servicesCount() ?? 0}}
+          {{ servicesLoading() ? '…' : servicesError() ? '—' : servicesCount() }}
         </p>
 
         <a
@@ -83,6 +83,20 @@
       </div>
 
     </section>
+
+    @if (servicesError()) {
+      <div class="mt-4 rounded-lg bg-red-50 p-4" role="alert">
+        <p class="text-sm text-red-700">{{ servicesError() }}</p>
+
+        <button
+          type="button"
+          (click)="loadServices()"
+          class="mt-2 text-sm font-medium text-emerald-700 hover:underline"
+        >
+          Újrapróbálás
+        </button>
+      </div>
+    }
 
     <!-- Középső rész -->
     <section class="mt-8 grid gap-6 xl:grid-cols-[2fr_1fr]">
@@ -109,60 +123,48 @@
           </a>
         </div>
 
-        <div class="divide-y divide-gray-100">
-          @for (order in OrderDetails()) {
-          <div class="flex items-center justify-between gap-4 px-6 py-4">
-            <div>
-              <p class="font-medium text-gray-900">
-                {{order.customerName}}
-              </p>
-              <p class="mt-1 text-sm text-gray-500">
-                {{order.serviceName}}
-              </p>
-            </div>
+        <div class="divide-y divide-gray-100" aria-live="polite">
+          @if (ordersLoading()) {
+            <p class="px-6 py-4 text-sm text-gray-500">
+              Megrendelések betöltése…
+            </p>
+          } @else if (ordersError()) {
+            <div class="px-6 py-4" role="alert">
+              <p class="text-sm text-red-700">{{ ordersError() }}</p>
 
-            <span
-              class="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700"
-            >
-              Új
-            </span>
-          </div>
+              <button
+                type="button"
+                (click)="loadOrders()"
+                class="mt-3 text-sm font-medium text-emerald-700 hover:underline"
+              >
+                Újrapróbálás
+              </button>
+            </div>
+          } @else {
+            @for (order of recentOrders(); track order.id) {
+              <div class="flex items-center justify-between gap-4 px-6 py-4">
+                <div class="min-w-0">
+                  <p class="break-words font-medium text-gray-900">
+                    {{ order.customerName }}
+                  </p>
+
+                  <p class="mt-1 text-sm text-gray-500">
+                    {{ order.serviceName }}
+                  </p>
+                </div>
+
+                <span
+                  class="shrink-0 rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700"
+                >
+                  {{ orderStatusLabels[order.orderStatusCode] ?? 'Ismeretlen' }}
+                </span>
+              </div>
+            } @empty {
+              <p class="px-6 py-4 text-sm text-gray-500">
+                Még nincs megrendelés.
+              </p>
+            }
           }
-
-          <div class="flex items-center justify-between gap-4 px-6 py-4">
-            <div>
-              <p class="font-medium text-gray-900">
-                Nagy Anna
-              </p>
-              <p class="mt-1 text-sm text-gray-500">
-                Kutató 5
-              </p>
-            </div>
-
-            <span
-              class="rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700"
-            >
-              Folyamatban
-            </span>
-          </div>
-
-          <div class="flex items-center justify-between gap-4 px-6 py-4">
-            <div>
-              <p class="font-medium text-gray-900">
-                Tóth Gábor
-              </p>
-              <p class="mt-1 text-sm text-gray-500">
-                Néveredet
-              </p>
-            </div>
-
-            <span
-              class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700"
-            >
-              Konzultáció
-            </span>
-          </div>
-
         </div>
       </div>
 
@@ -261,62 +263,65 @@
             </tr>
           </thead>
 
-          <tbody class="divide-y divide-gray-100">
+          <tbody class="divide-y divide-gray-100" aria-live="polite">
+            @if (postsLoading()) {
+              <tr>
+                <td colspan="4" class="px-6 py-4 text-gray-500">
+                  Blogbejegyzések betöltése…
+                </td>
+              </tr>
+            } @else if (postsError()) {
+              <tr>
+                <td colspan="4" class="px-6 py-4">
+                  <p class="text-red-700" role="alert">
+                    {{ postsError() }}
+                  </p>
 
-            <tr>
-              <td class="px-6 py-4 font-medium text-gray-900">
-                Családfakutatás régi újságokból
-              </td>
+                  <button
+                    type="button"
+                    (click)="loadPosts()"
+                    class="mt-3 font-medium text-emerald-700 hover:underline"
+                  >
+                    Újrapróbálás
+                  </button>
+                </td>
+              </tr>
+            } @else {
+              @for (post of recentPosts(); track post.id) {
+                <tr>
+                  <td class="px-6 py-4 font-medium text-gray-900">
+                    {{ post.title }}
+                  </td>
 
-              <td class="px-6 py-4">
-                <span
-                  class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700"
-                >
-                  Publikált
-                </span>
-              </td>
+                  <td class="px-6 py-4">
+                    <span
+                      class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700"
+                    >
+                      {{ postStatusLabels[post.postStatus] ?? 'Ismeretlen' }}
+                    </span>
+                  </td>
 
-              <td class="px-6 py-4 text-gray-500">
-                2026. 09. 21.
-              </td>
+                  <td class="whitespace-nowrap px-6 py-4 text-gray-500">
+                    {{ post.updatedAt | date:'yyyy. MM. dd.' }}
+                  </td>
 
-              <td class="px-6 py-4 text-right">
-                <a
-                  href="#"
-                  class="font-medium text-emerald-700 hover:underline"
-                >
-                  Szerkesztés
-                </a>
-              </td>
-            </tr>
-
-            <tr>
-              <td class="px-6 py-4 font-medium text-gray-900">
-                Hogyan kezdjünk családfát kutatni?
-              </td>
-
-              <td class="px-6 py-4">
-                <span
-                  class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600"
-                >
-                  Piszkozat
-                </span>
-              </td>
-
-              <td class="px-6 py-4 text-gray-500">
-                2026. 09. 19.
-              </td>
-
-              <td class="px-6 py-4 text-right">
-                <a
-                  href="#"
-                  class="font-medium text-emerald-700 hover:underline"
-                >
-                  Szerkesztés
-                </a>
-              </td>
-            </tr>
-
+                  <td class="px-6 py-4 text-right">
+                    <a
+                      routerLink="/admin/blog"
+                      class="font-medium text-emerald-700 hover:underline"
+                    >
+                      Megtekintés
+                    </a>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="4" class="px-6 py-4 text-gray-500">
+                    Még nincs blogbejegyzés.
+                  </td>
+                </tr>
+              }
+            }
           </tbody>
         </table>
       </div>

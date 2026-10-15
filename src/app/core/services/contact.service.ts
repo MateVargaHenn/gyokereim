@@ -8,23 +8,23 @@ import { Observable } from 'rxjs';
 })
 export class ContactService extends Api {
 
-  sendContactForm(request: SendContactMessageRequestDto, attachment?: File): Observable<any> {
+  sendContactForm(
+    request: SendContactMessageRequestDto,
+    attachment?: File
+  ): Observable<any> {
     const formData = new FormData();
 
+    formData.append('topic', request.topic);
     formData.append('name', request.name);
     formData.append('email', request.email);
     formData.append('phoneNumber', request.phoneNumber);
     formData.append('message', request.message);
     formData.append('captchaToken', request.captchaToken);
-    
 
-if (attachment) {
-    formData.append(
-        'attachment',
-        attachment,
-        attachment.name
-    );
-}
+    if (attachment) {
+      formData.append('attachment', attachment, attachment.name);
+    }
+
     return this.post<any>('contact/message/send', formData);
   }
 }

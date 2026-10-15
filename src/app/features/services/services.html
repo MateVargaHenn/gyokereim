@@ -1,12 +1,14 @@
 <section class="max-w-6xl mx-auto px-4 py-12">
   <div class="mb-10 text-center">
-    <h1 class="text-3xl md:text-4xl font-semibold mb-4">Szolgáltatások</h1>
+    <h1 class="text-3xl md:text-4xl font-semibold mb-4">Családfakutatás – fedezze fel családja történetét</h1>
     <p class="text-base md:text-lg text-stone-700">
-      Első alkalom díjmentes online konzultáció.
+      Anyakönyvi és történeti források segítségével kutatjuk fel felmenőit és családja múltját. Válasszon kutatási csomagot, vagy kérjen segítséget a megfelelő kutatási mélység kiválasztásához.
     </p>
-    <p class="text-base md:text-lg text-stone-700">
-      További konzultációkat a csomag tartalmazza.
+    <p class="mt-3 text-sm text-stone-500">
+      Első alkalom díjmentes online konzultáció.<br>
+      A további konzultációkat a csomag tartalmazza.
     </p>
+    <h2 id="csomagok" class="mt-2 text-2xl font-semibold text-stone-900">Melyik családfakutatási csomag illik Önhöz?</h2>
   </div>
 
   @if (isLoading()) {
@@ -30,9 +32,9 @@
     transition-all duration-300
     hover:-translate-y-1
     hover:shadow-lg">
-          <h2 class="text-xl font-semibold mb-3 text-stone-900">
+          <h3 class="text-xl font-semibold mb-3 text-stone-900">
             {{ service.name }}
-          </h2>
+          </h3>
 
           <div class="text-stone-700 leading-relaxed mb-4 flex-grow" [innerHTML]="service.shortDescription">
           </div>
@@ -56,4 +58,285 @@
       }
     </div>
   }
+</section>
+<div class="mt-8 text-center">
+  <p class="text-stone-600">
+    Nem tudja, melyik csomag lenne megfelelő?
+  </p>
+
+  <a
+    routerLink="/kapcsolat"
+    class="
+      mt-3
+      inline-flex
+      rounded-lg
+      bg-stone-900
+      px-6 py-3
+      font-medium
+      text-white
+      hover:bg-stone-700
+      transition
+    "
+  >
+    Segítséget kérek a csomagválasztáshoz
+  </a>
+</div>
+
+<section class="mx-auto max-w-5xl px-6 py-16">
+  <h2 class="text-3xl font-semibold text-stone-900">
+    Hogyan zajlik a családfakutatás?
+  </h2>
+
+  <div class="mt-10 grid gap-8 md:grid-cols-2">
+
+    <div>
+      <h3 class="text-xl font-semibold text-stone-900">
+        1. Kiinduló adatok egyeztetése
+      </h3>
+
+      <p class="mt-3 leading-7 text-stone-600">
+        Elsőként áttekintjük az ismert családi adatokat,
+        dokumentumokat és azt, hogy milyen kérdésekre szeretne
+        választ kapni.
+      </p>
+    </div>
+
+    <div>
+      <h3 class="text-xl font-semibold text-stone-900">
+        2. A források felkutatása
+      </h3>
+
+      <p class="mt-3 leading-7 text-stone-600">
+        A kutatás során többek között anyakönyvi és történeti
+        források segítségével követjük vissza a családi ágakat.
+      </p>
+    </div>
+
+    <div>
+      <h3 class="text-xl font-semibold text-stone-900">
+        3. Az adatok ellenőrzése
+      </h3>
+
+      <p class="mt-3 leading-7 text-stone-600">
+        A feltárt kapcsolatokat és adatokat a rendelkezésre álló
+        források alapján dokumentáljuk és rendszerezzük.
+      </p>
+    </div>
+
+    <div>
+      <h3 class="text-xl font-semibold text-stone-900">
+        4. A kutatás átadása
+      </h3>
+
+      <p class="mt-3 leading-7 text-stone-600">
+        Az eredményekből áttekinthető családfa és a kutatáshoz
+        kapcsolódó dokumentáció készül.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<section class="mx-auto max-w-5xl px-6 py-16">
+  <h2 class="text-3xl font-semibold text-stone-900">
+    Mire van szükség a családfakutatás megkezdéséhez?
+  </h2>
+
+  <p class="mt-4 max-w-3xl text-stone-600 leading-7">
+    Nem szükséges teljes családi dokumentációval rendelkeznie.
+    Már néhány biztos kiinduló adat is elegendő lehet a kutatás első lépéseinek meghatározásához.
+  </p>
+
+  <div class="mt-10 grid gap-6 md:grid-cols-2">
+    <div class="rounded-xl border border-stone-200 bg-white/60 p-5">
+      <h3 class="font-semibold text-stone-900">
+        Ismert családtagok nevei
+      </h3>
+      <p class="mt-2 text-sm leading-6 text-stone-600">
+        Minél pontosabb neveket ismer, annál könnyebb meghatározni
+        a kutatás első lépéseit.
+      </p>
+    </div>
+
+    <div class="rounded-xl border border-stone-200 bg-white/60 p-5">
+      <h3 class="font-semibold text-stone-900">
+        Születési és házassági adatok
+      </h3>
+      <p class="mt-2 text-sm leading-6 text-stone-600">
+        Már egy hozzávetőleges évszám vagy település is hasznos
+        kiindulópont lehet.
+      </p>
+    </div>
+
+    <div class="rounded-xl border border-stone-200 bg-white/60 p-5">
+      <h3 class="font-semibold text-stone-900">
+        Ismert települések
+      </h3>
+      <p class="mt-2 text-sm leading-6 text-stone-600">
+        A családhoz kötődő települések segíthetnek a megfelelő
+        anyakönyvi és történeti források megtalálásában.
+      </p>
+    </div>
+
+    <div class="rounded-xl border border-stone-200 bg-white/60 p-5">
+      <h3 class="font-semibold text-stone-900">
+        Családi iratok és feljegyzések
+      </h3>
+      <p class="mt-2 text-sm leading-6 text-stone-600">
+        Régi okmányok, gyászjelentések, levelek vagy családi
+        feljegyzések értékes támpontokat adhatnak.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-5xl px-6 py-16">
+  <div class="rounded-2xl border border-stone-200 bg-white/60 p-8 md:p-10">
+    <h2 class="text-3xl font-semibold text-stone-900">
+      Családfakutatás árak
+    </h2>
+
+    <p class="mt-4 max-w-3xl leading-7 text-stone-600">
+      A családfakutatás ára a választott kutatási mélységtől függ.
+      A Gyökereim csomagjai előre meghatározott keretet adnak,
+      így már a megrendelés előtt látható, milyen költséggel számolhat.
+    </p>
+
+    <div class="mt-8 grid gap-6 md:grid-cols-2">
+      <div>
+        <h3 class="text-lg font-semibold text-stone-900">
+          Átlátható csomagárak
+        </h3>
+
+        <p class="mt-2 leading-7 text-stone-600">
+          A csomagok eltérő kutatási mélységet kínálnak. A pontos ár minden szolgáltatásnál előre
+          megtekinthető.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-lg font-semibold text-stone-900">
+          20% előleg
+        </h3>
+
+        <p class="mt-2 leading-7 text-stone-600">
+          A kutatás megkezdéséhez a teljes csomagár 20%-ának
+          megfelelő előleg szükséges.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-8">
+      <a
+  routerLink="/szolgaltatasaim"
+  fragment="csomagok"
+  class="
+    inline-flex items-center justify-center
+    rounded-lg
+    border border-stone-300
+    px-5 py-2.5
+    font-medium text-stone-800
+    transition
+    hover:bg-stone-100
+  "
+>
+  Csomagok és árak megtekintése
+</a>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-5xl px-6 py-16">
+  <h2 class="text-3xl font-semibold text-stone-900">
+    Gyakori kérdések a családfakutatásról
+  </h2>
+
+  <div class="mt-10 space-y-4">
+
+    <details
+      class="rounded-xl border border-stone-200 bg-white/60 p-5"
+    >
+      <summary
+        class="cursor-pointer font-semibold text-stone-900"
+      >
+        Mennyibe kerül a családfakutatás?
+      </summary>
+
+      <p class="mt-4 leading-7 text-stone-600">
+        A családfakutatás ára a választott kutatási mélységtől függ.
+        Az aktuális csomagárak az oldal tetején találhatók.
+        A kutatás megkezdéséhez a teljes csomagár 20%-ának
+        megfelelő előleg szükséges.
+      </p>
+    </details>
+
+    <details
+      class="rounded-xl border border-stone-200 bg-white/60 p-5"
+    >
+      <summary
+        class="cursor-pointer font-semibold text-stone-900"
+      >
+        Milyen adatok szükségesek a családfakutatás megkezdéséhez?
+      </summary>
+
+      <p class="mt-4 leading-7 text-stone-600">
+        Már néhány biztos családi adat is elegendő lehet.
+        Hasznos kiindulópont lehet egy ismert családtag neve,
+        születési vagy házassági adata, illetve egy település,
+        amelyhez a család kötődött.
+      </p>
+    </details>
+
+    <details
+      class="rounded-xl border border-stone-200 bg-white/60 p-5"
+    >
+      <summary
+        class="cursor-pointer font-semibold text-stone-900"
+      >
+        Melyik kutatási csomagot válasszam?
+      </summary>
+
+      <p class="mt-4 leading-7 text-stone-600">
+        A megfelelő csomag elsősorban attól függ, milyen mélységben
+        szeretné feltárni családja történetét. Ha bizonytalan,
+        az első díjmentes online konzultáció során segítséget kap
+        a megfelelő csomag kiválasztásához.
+      </p>
+    </details>
+
+    <details
+      class="rounded-xl border border-stone-200 bg-white/60 p-5"
+    >
+      <summary
+        class="cursor-pointer font-semibold text-stone-900"
+      >
+        Milyen forrásokat használ a családfakutatás?
+      </summary>
+
+      <p class="mt-4 leading-7 text-stone-600">
+        A kutatás során többek között anyakönyvi és történeti
+        források segítségével követjük vissza a családi kapcsolatokat.
+        A felhasználható források az adott családi ágtól és
+        időszaktól is függenek.
+      </p>
+    </details>
+
+    <details
+      class="rounded-xl border border-stone-200 bg-white/60 p-5"
+    >
+      <summary
+        class="cursor-pointer font-semibold text-stone-900"
+      >
+        Mi történik, ha egy családi ág nem kutatható tovább?
+      </summary>
+
+      <p class="mt-4 leading-7 text-stone-600">
+        A kutathatóság mindig a fennmaradt és hozzáférhető
+        forrásoktól függ. Ha egy ág további kutatása nem lehetséges,
+        a rendelkezésre álló eredmények és források alapján
+        egyeztetjük a további lehetőségeket.
+      </p>
+    </details>
+
+  </div>
 </section>

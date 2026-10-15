@@ -196,6 +196,8 @@ export class TreeRoot implements AfterViewInit, OnDestroy {
       b: 204,
     };
 
+    P5.disableFriendlyErrors = true;
+    
     this.sketch = new P5((p: p5) => {
       let rootLayout: RootLayout | undefined;
       let rootPaths: DrawableRootPath[] = [];
@@ -446,20 +448,20 @@ p.draw = () => {
       }
 
       function drawCenteredTextBox(
-  text: string,
-  centerX: number,
-  centerY: number,
-  boxWidth: number,
-  boxHeight: number
-): void {
-  p.text(
-    text,
-    centerX - boxWidth / 2,
-    centerY - boxHeight / 2,
-    boxWidth,
-    boxHeight
-  );
-}
+        text: string,
+        centerX: number,
+        centerY: number,
+        boxWidth: number,
+        boxHeight: number
+      ): void {
+        p.text(
+          text,
+          centerX - boxWidth / 2,
+          centerY - boxHeight / 2,
+          boxWidth,
+          boxHeight
+        );
+      }
 
 function drawTitle(): void {
   p.push();

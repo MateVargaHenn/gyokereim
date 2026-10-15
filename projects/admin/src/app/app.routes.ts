@@ -87,6 +87,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/files/files')
             .then(m => m.Files)
+      },
+      {
+        path: 'web-beallitasok',
+        loadComponent: () =>
+          import('./features/web-settings/web-settings')
+            .then(m => m.WebSettings)
       }
     ]
   },

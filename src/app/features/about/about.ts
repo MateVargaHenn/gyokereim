@@ -26,7 +26,7 @@ export class About implements OnInit {
     this.title.setTitle('Bánfi Zoltán Csaba családfakutató | Gyökereim');
     this.meta.updateTag({
       name: 'description',
-      content: 'Bánfi Zoltán Csaba családfakutató. Róla itt talál információkat.'
+      content: 'Ismerje meg Bánfi Zoltán Csaba családfakutatót és történészt, kutatási szemléletét, valamint anyakönyvi, levéltári és történeti forrásokra épülő munkáját.'
     });
     this.seoService.setCanonical(
       'https://gyokereim.hu/rolam'

@@ -10,6 +10,12 @@ import { PostItemDto } from '@shared/data-transfer-objects/post-item.dto';
 import { ServiceDto } from '@shared/data-transfer-objects/service.dto';
 import { DecimalPipe } from '@angular/common';
 
+declare const gtag: (
+  command: 'event',
+  eventName: string,
+  parameters?: Record<string, unknown>
+) => void;
+
 
 @Component({
   selector: 'app-home',
@@ -47,17 +53,37 @@ export class Home implements OnInit {
 
 
   ngOnInit(): void {
+    this.seoService.setCanonical('https://gyokereim.hu/kezdolap');
 
-        this.seoService.setCanonical(
-          'https://gyokereim.hu/kezdolap'
-        );
-        this.title.setTitle('Bánfi Zoltán Csaba családfakutató | Gyökereim kezdőlap');
-        this.meta.updateTag({
-          name: 'description',
-          content: 'Bánfi Zoltán Csaba családfakutató, a Gyökereim blog szerzője. Családfakutatás, genealógia, családtörténet, családi örökség és hagyományok. Nézze meg a kezdőlapon az összefoglalót a szolgáltatásokról, a blogbejegyzésekről és a kapcsolatfelvételi lehetőségekről.'
-        });
-    
-        this.blogService.getPostsForHome().subscribe({
+    this.title.setTitle(
+      'Családfakutatás | Bánfi Zoltán Csaba – Gyökereim'
+    );
+
+    const description =
+      'Ismerje meg családja történetét Bánfi Zoltán Csaba családfakutató segítségével! Családfakutatás, felmenők feltárása és családtörténeti kutatás.';
+
+    this.meta.updateTag({
+      name: 'description',
+      content: description
+    });
+
+    this.meta.updateTag({
+      property: 'og:description',
+      content: description
+    });
+
+    this.meta.updateTag({
+      property: 'og:title',
+      content: 'Családfakutatás | Bánfi Zoltán Csaba – Gyökereim'
+    });
+
+    this.meta.updateTag({
+      property: 'og:url',
+      content: 'https://gyokereim.hu/kezdolap'
+    });
+
+    // Itt folytatódnak a meglévő API-lekéréseid.
+    this.blogService.getPostsForHome().subscribe({
         next: (data: PostItemDto[] | undefined) => {
           this.posts$.set(data ?? []);
           this.postIsLoading.set(false);
@@ -67,19 +93,35 @@ export class Home implements OnInit {
           this.error.set('Nem sikerült betölteni a bejegyzéseket.');
           this.postIsLoading.set(false);
         },
-      });
+    });
 
-           this.servicesService.getServices().subscribe({
-              next: (data: ServiceDto[] | undefined) => {
-                this.services$.set(data ?? []);
-                this.serviceIsLoading.set(false);
-              },
-              error: (error) => {
-                console.error(error);
-                this.error.set('Nem sikerült betölteni a szolgáltatásokat.');
-                this.serviceIsLoading.set(false);
-              },
-            });
+    this.servicesService.getServices().subscribe({
+       next: (data: ServiceDto[] | undefined) => {
+         this.services$.set(data ?? []);
+         this.serviceIsLoading.set(false);
+       },
+       error: (error) => {
+         console.error(error);
+         this.error.set('Nem sikerült betölteni a szolgáltatásokat.');
+         this.serviceIsLoading.set(false);
+       },
+    });
   }
+
+trackContactClick(): void {
+  if (typeof gtag !== 'function') return;
+
+  gtag('event', 'contact_cta_click', {
+    cta_location: 'home',
+  });
+}
+
+trackServicesClick(): void {
+  if (typeof gtag !== 'function') return;
+
+  gtag('event', 'services_cta_click', {
+    cta_location: 'home',
+  });
+}
 }
 

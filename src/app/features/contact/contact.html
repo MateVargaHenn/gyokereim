@@ -8,12 +8,20 @@
       </p>
 
       <h1 class="text-3xl md:text-4xl mb-4">
-        Írjon nekem!
+        {{ isPackageSelection()
+          ? 'Segítség a csomagválasztáshoz'
+          : 'Írjon nekem!' }}
       </h1>
 
       <p class="text-sm leading-6 max-w-xl">
-        Amennyiben kérdése van a családfakutatással vagy valamelyik
-        szolgáltatásommal kapcsolatban, küldjön üzenetet az alábbi űrlapon.
+        @if (isPackageSelection()) {
+          Nem szükséges előre kiválasztania a kutatási csomagot.
+          Írja meg, mit szeretne megtudni a családjáról,
+          és segítek kiválasztani a megfelelő szolgáltatást.
+        } @else {
+          Amennyiben kérdése van a családfakutatással vagy valamelyik
+          szolgáltatásommal kapcsolatban, küldjön üzenetet az alábbi űrlapon.
+        }
       </p>
     </div>
 
@@ -152,6 +160,14 @@
         >
           Üzenet
         </label>
+
+        @if (isPackageSelection()) {
+          <p class="text-sm mb-3">
+            Mit szeretne megtudni a családjáról?
+            Milyen neveket, településeket vagy évszámokat ismer már?
+            Nem baj, ha egyelőre kevés adat áll rendelkezésére.
+          </p>
+        }
 
         <textarea
           id="message"

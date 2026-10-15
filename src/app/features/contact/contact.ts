@@ -1,20 +1,23 @@
-import { Component, inject, signal, WritableSignal, AfterViewInit } from '@angular/core';
+import { Component, inject, signal, WritableSignal, afterNextRender } from '@angular/core';
 import { SeoService } from '@core/services/seo-service';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SendContactMessageRequestDto } from '@shared/data-transfer-objects/send-contact-message-request.dto';
 import { ContactService } from '@core/services/contact.service';
 import { environment } from 'src/environments/environment.development';
 import { Meta, Title } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-contact',
   imports: [ReactiveFormsModule],
   templateUrl: './contact.html',
   styleUrl: './contact.css',
 })
-export class Contact implements AfterViewInit {
+export class Contact {
 
 
   protected contactFormGroup = new FormGroup({
+    topic: new FormControl<'general' | 'package_selection'>('general', { nonNullable: true }),
     name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^\+?\d{10,15}$/)]),
@@ -31,6 +34,8 @@ export class Contact implements AfterViewInit {
   private readonly title = inject(Title);
   private readonly meta = inject(Meta);
   private readonly seoService = inject(SeoService);
+  private readonly route = inject(ActivatedRoute);
+  protected readonly isPackageSelection = signal(false);
 
   constructor() {
     
@@ -43,6 +48,17 @@ export class Contact implements AfterViewInit {
     this.seoService.setCanonical(
       'https://gyokereim.hu/kapcsolat'
     );
+    const isPackageSelection =
+      this.route.snapshot.queryParamMap.get('tema') === 'csomagvalasztas';
+
+    this.isPackageSelection.set(isPackageSelection);
+
+    this.contactFormGroup.controls.topic.setValue(
+      isPackageSelection ? 'package_selection' : 'general'
+    );
+    afterNextRender(() => {
+      this.renderTurnstile();
+    });
   }
 
 
@@ -57,7 +73,9 @@ export class Contact implements AfterViewInit {
           if (this.turnstileWidgetId) {
             window.turnstile.reset(this.turnstileWidgetId);
           }
-
+          this.contactFormGroup.controls.topic.setValue(
+            this.isPackageSelection() ? 'package_selection' : 'general'
+          );
           this.captchaToken = '';
         },
         error: (error) => {
@@ -76,9 +94,6 @@ protected onFileSelected(event: Event): void {
     this.attachment = input.files?.[0];
 }
 
-ngAfterViewInit(): void {
-  this.renderTurnstile();
-}
 private renderTurnstile(): void {
   this.turnstileWidgetId = window.turnstile.render(
     '#turnstile-container',

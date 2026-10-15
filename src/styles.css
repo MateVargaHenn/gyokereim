@@ -13,6 +13,7 @@
       --line: #4b4038;
       --button: #2f2924;
       --button-hover: #3a271b;
+      --dark-brown: #3a271b;
       --button-text: #f5ead9;
       --button-text-hover: #fffaf0;
   /* gyökér / fő grafika */
@@ -34,6 +35,9 @@
   /* CTA */
   --color-cta-bg: #3a271b;
   --color-cta-text: #fffaf0;
+}
+html {
+  scroll-behavior: smooth;
 }
 body {
   background-color: var(--bg);

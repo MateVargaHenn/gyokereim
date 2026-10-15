@@ -24,20 +24,59 @@ export class ServiceView implements OnInit {
   private seoService = inject(SeoService);
 
 
-  ngOnInit(): void {
-    
+ ngOnInit(): void {
     this.slug = this.route.snapshot.paramMap.get('slug') ?? undefined;
-    this.title.setTitle('Családfakutatás, családtörténet – Blog | Gyökereim');
-    this.meta.updateTag({
-      name: 'description',
-      content: `Bánfi Zoltán Csaba családfakutató, a Gyökereim blog szerzője. Családfakutatás, genealógia, családtörténet, családi örökség és hagyományok. Fedezze fel a ${this.slug ?? ''} szolgáltatást és ismerje meg a gyökereit!`
-    });
-    this.seoService.setCanonical(
-      `https://gyokereim.hu/szolgaltatasaim/${this.slug ?? ''}`
-    );
-    this.services.getServiceBySlug(this.slug ?? '').subscribe({
+
+    if (!this.slug) {
+      this.error.set('Érvénytelen szolgáltatás URL.');
+      this.isLoading.set(false);
+      return;
+    }
+
+    const canonicalUrl =
+      `https://gyokereim.hu/szolgaltatasaim/${this.slug}`;
+
+    this.seoService.setCanonical(canonicalUrl);
+
+    this.services.getServiceBySlug(this.slug).subscribe({
       next: (data: ServiceDto | undefined) => {
+        if (!data) {
+          this.error.set('A szolgáltatás nem található.');
+          this.isLoading.set(false);
+          return;
+        }
+
         this.service$.set(data);
+
+        const pageTitle = `${data.name} | Gyökereim`;
+
+        const description =
+          `Ismerje meg a(z) ${data.name} szolgáltatást! ` +
+          `Bánfi Zoltán Csaba családfakutató segítségével ` +
+          `fedezze fel családja történetét és felmenőit.`;
+
+        this.title.setTitle(pageTitle);
+
+        this.meta.updateTag({
+          name: 'description',
+          content: description
+        });
+
+        this.meta.updateTag({
+          property: 'og:title',
+          content: pageTitle
+        });
+
+        this.meta.updateTag({
+          property: 'og:description',
+          content: description
+        });
+
+        this.meta.updateTag({
+          property: 'og:url',
+          content: canonicalUrl
+        });
+
         this.isLoading.set(false);
       },
       error: (error) => {

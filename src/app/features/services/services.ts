@@ -22,31 +22,50 @@ export class Services implements OnInit {
   private readonly meta = inject(Meta);
   private seoService = inject(SeoService);
 
+  ngOnInit(): void {
+    const pageTitle =
+      'Családfakutatás árak és szolgáltatások | Gyökereim';
 
-  constructor() {
-    this.title.setTitle('Szolgáltatásaim - Bánfi Zoltán Csaba családfakutató | Gyökereim');
+    const description =
+      'Ismerje meg családfakutatási szolgáltatásaimat és áraimat! Kutatás 5, 6 vagy 7 generációig, felmenők feltárása és családtörténeti kutatás.';
+
+    const canonicalUrl =
+      'https://gyokereim.hu/szolgaltatasaim';
+
+    this.seoService.setCanonical(canonicalUrl);
+
+    this.title.setTitle(pageTitle);
+
     this.meta.updateTag({
       name: 'description',
-      content: 'Bánfi Zoltán Csaba családfakutató, a Gyökereim blog szerzője. Családfakutatás, genealógia, családtörténet, családi örökség és hagyományok. Fedezze fel a szolgáltatásait és ismerje meg a gyökereit!'
+      content: description
     });
-    this.seoService.setCanonical(
-      'https://gyokereim.hu/szolgaltatasaim'
-    );
-  }
 
-  ngOnInit(): void {
+    this.meta.updateTag({
+      property: 'og:title',
+      content: pageTitle
+    });
 
-  
-     this.servicesService.getServices().subscribe({
-        next: (data: ServiceDto[] | undefined) => {
-          this.services$.set(data ?? []);
-          this.isLoading.set(false);
-        },
-        error: (error) => {
-          console.error(error);
-          this.error.set('Nem sikerült betölteni a szolgáltatásokat.');
-          this.isLoading.set(false);
-        },
-      });
+    this.meta.updateTag({
+      property: 'og:description',
+      content: description
+    });
+
+    this.meta.updateTag({
+      property: 'og:url',
+      content: canonicalUrl
+    });
+
+    this.servicesService.getServices().subscribe({
+      next: (data: ServiceDto[] | undefined) => {
+        this.services$.set(data ?? []);
+        this.isLoading.set(false);
+      },
+      error: (error) => {
+        console.error(error);
+        this.error.set('Nem sikerült betölteni a szolgáltatásokat.');
+        this.isLoading.set(false);
+      },
+    });
   }
 }

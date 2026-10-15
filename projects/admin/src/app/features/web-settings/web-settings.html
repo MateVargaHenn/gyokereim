@@ -1,0 +1,235 @@
+<section class="mx-auto max-w-5xl p-8">
+
+  <div class="mb-8">
+    <h1 class="text-3xl font-semibold text-gray-900">
+      Web beállítások
+    </h1>
+
+    <p class="mt-2 text-gray-600">
+      A weboldalon megjelenő általános tartalmak szerkesztése.
+    </p>
+  </div>
+
+  @if (isLoading()) {
+    <p class="text-gray-600">
+      Betöltés...
+    </p>
+  }
+  @else {
+
+    <form
+      [formGroup]="form"
+      (ngSubmit)="save()"
+      class="space-y-8"
+    >
+
+      <div
+        class="
+          rounded-xl
+          border
+          border-gray-200
+          bg-white
+          p-6
+          shadow-sm
+        "
+      >
+
+        <h2 class="mb-6 text-xl font-semibold text-gray-900">
+          Rólam
+        </h2>
+
+        <div class="space-y-6">
+
+          <div>
+            <label
+              for="introduceTitle"
+              class="mb-2 block text-sm font-medium text-gray-700"
+            >
+              Név
+            </label>
+
+            <input
+              id="introduceTitle"
+              type="text"
+              formControlName="introduceTitle"
+              class="
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                px-3
+                py-2
+              "
+            >
+          </div>
+
+          <div>
+            <label
+              for="introduceSubtitle"
+              class="mb-2 block text-sm font-medium text-gray-700"
+            >
+              Alcím
+            </label>
+
+            <input
+              id="introduceSubtitle"
+              type="text"
+              formControlName="introduceSubtitle"
+              class="
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                px-3
+                py-2
+              "
+            >
+          </div>
+
+        <div>
+        <label
+            class="mb-2 block text-sm font-medium text-gray-700"
+        >
+            Rövid bemutatkozás
+        </label>
+
+        <editor
+            formControlName="introduceShort"
+            [apiKey]="tinyMceApiKey"
+            [init]="shortEditorConfig"
+        />
+
+        <p class="mt-1 text-xs text-gray-500">
+            Ez a szöveg jelenik meg a kezdőlapon.
+        </p>
+        </div>
+
+        <div>
+        <label
+            class="mb-2 block text-sm font-medium text-gray-700"
+        >
+            Részletes bemutatkozás
+        </label>
+
+        <editor
+            formControlName="introduce"
+            [apiKey]="tinyMceApiKey"
+            [init]="detailedEditorConfig"
+        />
+
+        <p class="mt-1 text-xs text-gray-500">
+            Ez a tartalom jelenik meg a Rólam oldalon.
+        </p>
+        </div>
+
+          <div>
+            <label
+              for="introduceQuote"
+              class="mb-2 block text-sm font-medium text-gray-700"
+            >
+              Idézet
+            </label>
+
+            <textarea
+              id="introduceQuote"
+              formControlName="introduceQuote"
+              rows="3"
+              class="
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                px-3
+                py-2
+              "
+            ></textarea>
+          </div>
+
+          <div>
+            <label
+              for="introduceImage"
+              class="mb-2 block text-sm font-medium text-gray-700"
+            >
+              Bemutatkozó kép
+            </label>
+
+            <input
+              id="introduceImage"
+              type="text"
+              formControlName="introduceImage"
+              class="
+                w-full
+                rounded-md
+                border
+                border-gray-300
+                px-3
+                py-2
+              "
+            >
+
+            <p class="mt-1 text-sm text-gray-500">
+              Például: about.jpg
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      @if (error()) {
+        <div
+          class="
+            rounded-md
+            bg-red-50
+            p-4
+            text-sm
+            text-red-700
+          "
+        >
+          {{ error() }}
+        </div>
+      }
+
+      @if (success()) {
+        <div
+          class="
+            rounded-md
+            bg-green-50
+            p-4
+            text-sm
+            text-green-700
+          "
+        >
+          {{ success() }}
+        </div>
+      }
+
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          [disabled]="isSaving()"
+          class="
+            cursor-pointer
+            rounded-md
+            bg-gray-800
+            px-5
+            py-2.5
+            font-semibold
+            text-white
+            hover:bg-gray-700
+            disabled:cursor-not-allowed
+            disabled:opacity-50
+          "
+        >
+          @if (isSaving()) {
+            Mentés...
+          }
+          @else {
+            Mentés
+          }
+        </button>
+      </div>
+
+    </form>
+  }
+
+</section>
