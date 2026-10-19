@@ -27,11 +27,12 @@ export class Services implements OnInit {
       'Családfakutatás árak és szolgáltatások | Gyökereim';
 
     const description =
-      'Ismerje meg családfakutatási szolgáltatásaimat és áraimat! Kutatás 5, 6 vagy 7 generációig, felmenők feltárása és családtörténeti kutatás.';
+      'Mennyibe kerül a családfakutatás? Ismerje meg a Gyökereim kutatási csomagjait, árait és a kutatás menetét. Első online konzultáció díjmentesen.';
 
     const canonicalUrl =
       'https://gyokereim.hu/szolgaltatasaim';
 
+    
     this.seoService.setCanonical(canonicalUrl);
 
     this.title.setTitle(pageTitle);
